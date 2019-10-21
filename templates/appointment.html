@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body,html{
+            width: 100%;
+        }
+        
+        .bg{
+            height: 300px;
+            width: inherit;
+            background-color: #262624;
+            z-index: -1;
+            position: absolute;
+           
+        }
+        .book{
+            margin-top: 20px;
+        }
+        .form-wrap{
+            margin: 10px 5px 10px 5px;
+            background-color: white;
+            padding: 20px 10px 10px 10px;
+            border-radius: 3px;
+            box-shadow: 0px 0px 10px grey;
+        }
+        .form-wrap textarea{
+            width:100%;
+            margin-bottom: 30px;
+        }
+        .form-control{
+            margin: 5px 0px 30px 0px;
+            box-sizing: border-box;
+            border-radius: 0px;
+            border-width: 0px 0px 1px 0px;
+            border-style: solid;
+            border-bottom-color: silver;
+        }
+        .primary-btn{
+            background-color: lawngreen;
+            border-radius: 2px;
+            text-align: center;
+            border-width: 0px;
+            border-style: none;
+            padding: 10px 20px 10px 20px;
+            font-weight: 450; 
+            margin-bottom: 20px;
+        }
+        .middle{
+            width:20%;
+            margin-left: 40%;
+            margin-right: 40%;
+        }
+        .hospital{
+            border-radius: 100px 0px 0px 100px;
+            box-shadow: 0px 0px 10px grey;
+            height: 100px;
+            margin: 20px 0px 20px 0px;
+            padding: 0px;
+            overflow: hidden;
+        }
+        .mainlogo{
+            height: inherit;
+            margin: 0px;
+            padding: 0px;
+        }
+        .details{
+            padding: 2px 2px 2px 2px;
+        }
+        .details *{
+            margin-bottom: 2px;
+        }
+        .more-details{
+            color: dimgray;
+            display: flex;
+            margin-top: 8px;
+            align-content: space-around;
+        }
+        .hos-buttons{
+            padding-top: 10px;
+            
+        }
+        .hos-buttons *{
+            border-radius:100px; 
+            margin-bottom: 10px;
+            padding: 5px 20px 5px 20px;
+        }
+    </style>
+    <script>
+        var res = '{{ d|tojson }}';
+        console.log(res);
+    </script>
+    </head>
+    <body>
+        <div class="bg"></div>
+        <div class="row">
+        <div class="col-3"></div>
+        <div class="book col-6">
+            <div class="book-body">
+                <h3  style="color:whitesmoke;padding-left: 20px; ">Book an Appointment</h3>
+                <form class="form-wrap" action="#" method="POST">
+										
+								<input type="text" class="form-control" name="name" placeholder="Patient Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'" >
+								<input type="text" class="form-control" name="phone" placeholder="Phone " onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'" >
+								<input type="email" class="form-control" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" >
+								<input id="datepicker1" name="dop" class="dates form-control"  placeholder="Date of Birth" type="text">   
+								<input id="datepicker2" name="adate" class="dates form-control"  placeholder="Appointment Date" type="text">  
+								<textarea name="description" class="" rows="5" placeholder="Description" onfocus="this.placeholder = ''" onblur="this.placeholder = 'description'"></textarea> 
+								<button onclick="search()" class="primary-btn middle text-uppercase">Search</button>
+							</form>
+            </div>
+        </div>
+        <div class="col-3"></div>
+        </div>
+        <hr style="border-top: 1px solid; border-color: grey;">
+        <div class="row" id="results">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8 row hospital">
+                <div class=" mainlogo col-3">
+                    <img style=" height: inherit;" src="/static/img/hospital-logo.jpg">
+                </div>
+                <div class="details col-6">
+                    <h3 style="font-weight: 400;">MDS Hospital</h3>
+                    <p style="color: grey;">asd,asdfg,adfadf,1234</p>
+                    <div class="more-details">
+                        <p>Doctors</p>
+                        <p>Service Hours</p>
+                    </div>
+                </div>
+                <div class="hos-buttons col-3">
+                    <button class="primary-btn text-uppercase" onclick="seeDoctors()">See Doctors</button>
+                    <button class="primary-btn text-uppercase" onclick="">Reviews</button>
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+        <script>
+        function seeDoctors(){
+            var results = document.getElementById('results');
+            var index=0;
+            var doctor_html="";
+            for (let i = 0; i < res.length; i++) {
+                var index = "d${i}";
+                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}</h3><p style="color: grey;">${res[index]["dept"]}</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" onclick="book()">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
+            }
+            results.innerHTML= doctor_html;
+        };
+        
+    </script>
+    </body>
+</html>
