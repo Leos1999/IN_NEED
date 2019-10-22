@@ -92,7 +92,7 @@
             padding: 5px 20px 5px 20px;
         }
     </style>
-    <script>
+    <script>      
         var res = '{{ d|tojson }}';
         console.log(res);
     </script>
@@ -155,7 +155,8 @@
             results.innerHTML= doctor_html;
         };
         $('#book').click(function() {
-        
+        var names = '{{data|tojson}}';
+
         $.ajax({
           type: "POST",
           contentType: "application/json;charset=utf-8",

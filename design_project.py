@@ -1,8 +1,9 @@
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-# nltk.download("stopwords")
-# nltk.download('punkt')
+
+nltk.download("stopwords")
+nltk.download('punkt')
 
 from flask import Flask, render_template,request,redirect,url_for
 from flask_mysqldb import MySQL
@@ -34,7 +35,7 @@ def Recommender(sentance):
 
     Specialists = ['Addiction psychiatrist', 'Immunologist', 'Cardiologist', 'Dermatologist', 'Developmental pediatrician',
                    'Gastroenterologist', 'Gynecologist', 'Hematologist', 'Nephrologist', 'Neurologist',
-                   'Oncologist', 'Ophthalmologist', 'Orthopedic surgeon', 'ENT', 'Pediatrician', 'Psychiatrist', 'Urologist']
+                   'Oncologist', 'Ophthalmologist', 'Orthopedic surgeon', 'ENT', 'Pediatrician', 'Psychiatrist', 'Urologist','Dentist']
 
     Collection = {0: ['addiction', 'alcohol', 'drugs', 'concentration'],
                   1: ['allergy', 'immunity', 'pollen', 'sneezing', 'itchy', 'rash', 'swollen'],
@@ -53,8 +54,9 @@ def Recommender(sentance):
                   14: ['child', 'kid', 'baby', 'new', 'born', 'fever', 'cough'],
                   15: ['mental', 'depression', 'concentration', 'addiction', 'temper', 'anxiety', 'disorder', 'illogical', 'thoughts', 'memory'],
                   16: ['urine', 'infection', 'urinating', 'pelvic', 'pain', 'fertility', 'men', 'erectile']
+                  17: ['teeth']
                   }
-    Recom_list = [0] * 17
+    Recom_list = [0] * 18
     for i in filtered_sentence:
         for k, v in Collection.items():
             if i in v:
@@ -81,6 +83,7 @@ def login():
 
 d={}
 d1={}
+data = {}
 @app.route("/appointment",methods=['GET','POST'])
 def appointment():
     if request.method == "POST":
@@ -95,10 +98,8 @@ def appointment():
         string = details['description']
         string = string.lower()
         result = Recommender(string)
-        result = 'Opthalmologist'
         print(string)
         print(result)
-        #d['result'] = result
         stmt = "SELECT * FROM DOCTOR WHERE DEPT='"+str(result)+"'"
         cur.execute(stmt)
         myresult = cur.fetchall()
@@ -114,7 +115,9 @@ def appointment():
             d[m] = d1
             n+=1
         print(d)
-    return render_template("appointment.html",d=d)
+        global data
+        data = {'name':name,'adate':a_date}
+    return render_template("appointment.html",d=d,data=data)
 
 @app.route("/recommend",methods=['GET','POST'])
 def recommend():
@@ -149,6 +152,43 @@ def signup():
 def logged():
     return render_template("logged.html",uname=uname)
 
+pdata = {}
+pd = {}
+@app.route("/profile",methods=['GET','POST'])
+def profile():
+    global uname
+    cur = mysql.connection.cursor()
+    stmt = "SELECT * FROM USERS WHERE USERNAME='"+uname+"'"
+    cur.execute(stmt)
+    myresult = cur.fetchall()
+    mysql.connection.commit()
+    for i in myresult:
+        pdata['uname'] = i[1]
+        pdata['fname'] = i[2]
+        pdata['lname'] = i[3]
+        pdata['dob'] = i[4]
+        pdata['mail'] = i[5]
+        pdata['phone'] = i[6]
+        pdata['gender'] = i[8]
+        pdata['address'] = i[9]
+        pdata['district'] = i[10]
+        pdata['town'] = i[11]
+    stmt = "SELECT * FROM BOOKED WHERE NAME='"+uname+"'"
+    cur.execute(stmt)
+    myresult = cur.fetchall()
+    mysql.connection.commit()
+    j=1
+    for i in myresult:
+        k = "pd"+str(j)
+        pd['name'] = i[0]
+        pd['a_date'] = i[1]
+        pd['d_name'] = i[2]
+        pd['host'] = i[3]
+        pd['dept'] = i[4]
+        pdata[k]=pd
+        j+=1
+    cur.close()
+    return render_template("profile.html",pdata=pdata)
     
 if __name__ == "__main__":
     app.run(debug=True)
