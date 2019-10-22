@@ -146,6 +146,7 @@
             <div class="col-lg-2"></div>
         </div>
         <script>
+	var c=0;
         function seeDoctors(){
             var results = document.getElementById('results');
             var index=0;
@@ -154,14 +155,16 @@
             for (i in res) {
                 var index = i;
                 console.log(res[index]);
-                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}</h3><p style="color: grey;">${res[index]["dept"]}</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" onclick="book(this)" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
+		 c+=1
+                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital-${c}"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}</h3><p style="color: grey;">${res[index]["dept"]}</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" onclick="book(${c})" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
             }
             console.log(doctor_html);
             results.innerHTML= doctor_html;
         };
-       function book(id){
-	       var names=document.querySelectorAll(id);
-	       console.log(names[0]);
+       function book(c){
+	       var id=c;
+	       var element = document.querySelectorAll(`div#hospital-${id}`);
+	       console.log(element[0]);
 	       $.ajax({
 		  type: "POST",
 		  contentType: "application/json;charset=utf-8",
