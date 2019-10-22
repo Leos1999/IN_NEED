@@ -9,12 +9,16 @@
         }
         
         .bg{
-            height: 300px;
+            height: 684px;
             width: inherit;
-            background-color: #262624;
             z-index: -1;
             position: absolute;
-           
+        }
+        .bg1{
+            width: inherit;
+            height: inherit;
+            background-image: url(/static/img/appoint.jpg);
+            background-size: 100% 100%;
         }
         .book{
             margin-top: 20px;
@@ -94,12 +98,15 @@
     </script>
     </head>
     <body>
-        <div class="bg"></div>
+        <div class="bg">
+            <div class="bg1"></div>
+            <div class="bg2"></div>
+        </div>
         <div class="row">
-        <div class="col-3"></div>
-        <div class="book col-6">
+        <div class="col-3" style="max-width: 30%;"></div>
+        <div class="book col-6" style="max-width: 60%;">
             <div class="book-body">
-                <h3  style="color:whitesmoke;padding-left: 20px; ">Book an Appointment</h3>
+                <h3  style="color:rgb(0, 0, 0);padding-left: 20px; ">Book an Appointment</h3>
                 <form class="form-wrap" action="#" method="POST">
 										
 								<input type="text" class="form-control" name="name" placeholder="Patient Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'" >
@@ -107,12 +114,12 @@
 								<input type="email" class="form-control" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" >
 								<input id="datepicker1" name="dop" class="dates form-control"  placeholder="Date of Birth" type="text">   
 								<input id="datepicker2" name="adate" class="dates form-control"  placeholder="Appointment Date" type="text">  
-								<textarea name="description" class="" rows="5" placeholder="Description" onfocus="this.placeholder = ''" onblur="this.placeholder = 'description'"></textarea> 
+								<textarea name="description" class="" rows="5" placeholder="  Please Describe Your Symtoms" onfocus="this.placeholder = ''" onblur="this.placeholder = '  Please Describe Your Symtoms'"></textarea> 
 								<button onclick="search()" class="primary-btn middle text-uppercase">Search</button>
 							</form>
             </div>
         </div>
-        <div class="col-3"></div>
+        <div class="col-3" style="max-width: 30%;"></div>
         </div>
         <hr style="border-top: 1px solid; border-color: grey;">
         <div class="row" id="results">
@@ -143,10 +150,21 @@
             var doctor_html="";
             for (let i = 0; i < res.length; i++) {
                 var index = "d${i}";
-                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}</h3><p style="color: grey;">${res[index]["dept"]}</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" onclick="book()">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
+                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}</h3><p style="color: grey;">${res[index]["dept"]}</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" onclick="book()" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
             }
             results.innerHTML= doctor_html;
         };
+        $('#book').click(function() {
+        
+        $.ajax({
+          type: "POST",
+          contentType: "application/json;charset=utf-8",
+          url: "/appointment",
+          traditional: "true",
+          data: JSON.stringify({names}),
+          dataType: "json"
+          });
+    });
         
     </script>
     </body>
