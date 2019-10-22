@@ -77,6 +77,7 @@ def about():
 def services():
     return render_template("services.html")
 
+valid='incorrect'
 @app.route("/login",methods=['GET','POST'])
 def login():
     if request.method == 'POST':
@@ -90,8 +91,9 @@ def login():
         myresult = cur.fetchall()
         mysql.connection.commit()
         print(myresult)
-        print(myresult[0])
-        if password == myresult[0]:
+        print(myresult[0][0])
+        global valid
+        if password == myresult[0][0]:
             valid = 'correct'
         else:
             valid = 'incorrect'
@@ -152,11 +154,6 @@ def booked():
     mysql.connection.commit()
     cur.close()
     return redirect(url_for('home'))
-
-@app.route("/recommend",methods=['GET','POST'])
-def recommend():
-    #return 'success'
-    return render_template("recommend.html")
 
 @app.route("/signup",methods=['GET','POST'])
 def signup():
