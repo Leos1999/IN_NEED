@@ -50,10 +50,10 @@ def Recommender(sentance):
                   10: ['cancer'],
                   11: ['eye', 'vision', 'eyes', 'see', 'pain'],
                   12: ['shoulder', 'pain', 'bone', 'twisted', 'angles', 'joints', 'numb', 'hands', 'swollen', 'bend', 'wrist', 'neck', 'broken', 'painful', 'stiff', 'muscles','leg','back','hand','joint'],
-                  13: ['ear', 'ears', 'nose', 'throat', 'balance', 'hearing', 'infection', 'dizziness'],
+                  13: ['ear', 'ears', 'nose', 'throat', 'balance', 'hearing', 'infection', 'dizziness','bleeding'],
                   14: ['child', 'kid', 'baby', 'new', 'born', 'fever', 'cough'],
                   15: ['mental', 'depression', 'concentration', 'addiction', 'temper', 'anxiety', 'disorder', 'illogical', 'thoughts', 'memory'],
-                  16: ['urine', 'infection', 'urinating', 'pelvic', 'pain', 'fertility', 'men', 'erectile']
+                  16: ['urine', 'infection', 'urinating', 'pelvic', 'pain', 'fertility', 'men', 'erectile'],
                   17: ['teeth']
                   }
     Recom_list = [0] * 18
@@ -77,12 +77,28 @@ def about():
 def services():
     return render_template("services.html")
 
-@app.route("/login")
+@app.route("/login",methods=['GET','POST'])
 def login():
-    return render_template("login.html")
+    if request.method == 'POST':
+        details = request.form
+        #name = details['uname']
+        email = details['mail']
+        password = details['password']
+        cur = mysql.connection.cursor()
+        stmt = "SELECT PASSWORD FROM USERS WHERE EMAIL='"+email+"'"
+        cur.execute(stmt)
+        myresult = cur.fetchall()
+        mysql.connection.commit()
+        print(myresult)
+        print(myresult[0])
+        if password == myresult[0]:
+            valid = 'correct'
+        else:
+            valid = 'incorrect'
+        print(valid)
+    return render_template("login.html",valid=valid)
 
 d={}
-d1={}
 data = {}
 @app.route("/appointment",methods=['GET','POST'])
 def appointment():
@@ -108,16 +124,34 @@ def appointment():
         n=1
         cur.close()
         for i in myresult:
+            y={}
             m = "d"+str(n)
-            d1['name'] = i[1]
-            d1['dept'] = i[2]
-            d1['sh'] = i[4]
-            d[m] = d1
+            y['name'] = i[1]
+            y['dept'] = i[2]
+            y['sh'] = i[4]
+            print(y)
+            d[m] = y
             n+=1
+            print(d)
         print(d)
         global data
-        data = {'name':name,'adate':a_date}
+        data = {'name':name,'a_date':a_date}
     return render_template("appointment.html",d=d,data=data)
+
+@app.route("/booked",methods=['GET','POST'])
+def booked():
+    values = request.get_json()
+    print(values)
+    name = values['name']
+    a_date = values['a_date']
+    d_name = values['d_name']
+    host = values['host']
+    dept = values['dept']
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO BOOKED(NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s)", (name,a_date,d_name,host,dept))
+    mysql.connection.commit()
+    cur.close()
+    return redirect(url_for('home'))
 
 @app.route("/recommend",methods=['GET','POST'])
 def recommend():
