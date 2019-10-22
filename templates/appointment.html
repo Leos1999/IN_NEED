@@ -94,8 +94,9 @@
     </style>
     <script>      
         var res = '{{ d|tojson }}';
-	res= JSON.parse(res);
+        res= JSON.parse(res);
         console.log(res);
+        var res1 = '{{data|tojson}}';
     </script>
     </head>
     <body>
@@ -149,12 +150,13 @@
             var results = document.getElementById('results');
             var index=0;
             var doctor_html="";
-            for (let i = 0; i < res.length; i++) {
-                var index = "d${i}";
-		console.log(res[index]);
+            console.log("sfkgasjdfgadf");
+            for (i in res) {
+                var index = i;
+                console.log(res[index]);
                 doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}</h3><p style="color: grey;">${res[index]["dept"]}</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" onclick="book(this)" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
             }
-	    console.log(doctor_html);
+            console.log(doctor_html);
             results.innerHTML= doctor_html;
         };
        function book(id){
