@@ -150,22 +150,22 @@
             var doctor_html="";
             for (let i = 0; i < res.length; i++) {
                 var index = "d${i}";
-                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}</h3><p style="color: grey;">${res[index]["dept"]}</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" onclick="book()" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
+                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}</h3><p style="color: grey;">${res[index]["dept"]}</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" onclick="book(this)" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
             }
             results.innerHTML= doctor_html;
         };
-        $('#book').click(function() {
-        var names = '{{data|tojson}}';
-
-        $.ajax({
-          type: "POST",
-          contentType: "application/json;charset=utf-8",
-          url: "/appointment",
-          traditional: "true",
-          data: JSON.stringify({names}),
-          dataType: "json"
-          });
-    });
+       function book(id){
+	       var names=document.querySelectorAll(id);
+	       console.log(names[0]);
+	       $.ajax({
+		  type: "POST",
+		  contentType: "application/json;charset=utf-8",
+		  url: "/appointment",
+		  traditional: "true",
+		  data: JSON.stringify({names}),
+		  dataType: "json"
+		  });
+       };
         
     </script>
     </body>
