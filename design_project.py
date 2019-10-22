@@ -1,7 +1,6 @@
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-
 # nltk.download("stopwords")
 # nltk.download('punkt')
 
@@ -94,10 +93,13 @@ def appointment():
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO APPOINTMENT(NAME,PHONE,MAIL,DOB,A_DATE) VALUES ( %s, %s, %s, %s, %s)", (name,phone,mail,dob,a_date))
         string = details['description']
+        string = string.lower()
         result = Recommender(string)
+        result = 'Opthalmologist'
         print(string)
+        print(result)
         #d['result'] = result
-        stmt = "SELECT * FROM DOCTOR WHERE DEPT='"+result+"'"
+        stmt = "SELECT * FROM DOCTOR WHERE DEPT='"+str(result)+"'"
         cur.execute(stmt)
         myresult = cur.fetchall()
         mysql.connection.commit()
