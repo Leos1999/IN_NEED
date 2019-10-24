@@ -6,7 +6,7 @@
 <style>
 body {font-family: Arial, Helvetica, sans-serif;position: relative; overflow-x: hidden;}
 form {border: 3px solid #f1f1f1;}
-input[type=text], input[type=password] {
+input[type=text], input[type=password],input[type=date],input[type=email],input[type=tel] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -56,37 +56,34 @@ span.psw {
 </style>
 </head>
 <body>
-
-
 <div class="row main">
 <div class = "col-lg-2"></div>
-<div class="col-lg-4 img-container">
-    <img style="height: 720px;" src="/static/img/patient-signup.jpg">
+<div class="col-lg-4 img-container" style="margin-top: 3%;">
+    <img style="height: 820px;" src="/static/img/patient-signup.jpg">
 </div>
 <div class="col-lg-3 col-sm-12" style="background-color: white;">
-    <h2 style="text-align: center; font-size: 20px;padding-top:10px; ">Sign Up</h2>
+    <h2 style="text-align: center; font-size: 20px;padding-top:10px; ">SIGN UP</h2>
     <form action="#" method="POST">
     <div class="container">
     <input type="text" placeholder="Username" name="uname" required>
     <input type="text" placeholder="First name" name="fname" required>
     <input type="text" placeholder="Last name" name="lname" required>
-    <input type="text" placeholder="Date Of Birth" name="dob" required>
-    <input type="text" placeholder="Phone" name="phone" required>
-    <input type="text" placeholder="Email" name="mail" required>
+    <input type="text" placeholder="Date Of Birth" onfocus="(this.type='date')" onblur="(this.type='text')" name="dob" max="2019-10-30" required>
+    <input type="tel" placeholder="Phone" name="phone" pattern="[0-9]{10}" required>
+    <input type="email" placeholder="Email" name="mail" required>
     <input type="text" placeholder="Gender" name="gender" required>
     <input type="text" placeholder="Address" name="address" required>
     <input type="text" placeholder="District" name="district" required>
     <input type="text" placeholder="Town" name="town" required>
     <input type="password" placeholder="Password" name="password" required>
-    <button type="submit">Login</button>
+    <button type="submit">SignUp</button>
     <label>
       <input type="checkbox" checked="checked" name="remember"> Remember me
     </label>
   </div>
 
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn"><a style="text-decoration:none;color : #ffffff" href="index.html">Cancel</a></button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
+  <div class="container" style="background-color:#f1f1f1; text-align: center;">
+    <button type="button" class="cancelbtn"><a style="text-decoration:none;color : #ffffff;" href="index.html">Cancel</a></button>
   </div>
 </form>
 </div>

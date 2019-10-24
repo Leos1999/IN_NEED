@@ -5,8 +5,8 @@ from nltk.tokenize import word_tokenize
 nltk.download("stopwords")
 nltk.download('punkt')
 
-from flask import Flask, render_template,request,redirect,url_for
-from flask_mysqldb import MySQL
+from flask import Flask,flash, render_template,request,redirect,url_for
+from flask_mysqldb import MySQL,MySQLdb
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'sql12.freemysqlhosting.net'
@@ -22,7 +22,7 @@ app.config['MYSQL_DB'] = 'sql12309268'
 
 mysql = MySQL(app)
 
-uname = 'man'
+uname = 'user'
 
 def Recommender(sentance):
     stop_words = set(stopwords.words('english'))
@@ -76,29 +76,6 @@ def about():
 @app.route("/services")
 def services():
     return render_template("services.html")
-
-valid='incorrect'
-@app.route("/login",methods=['GET','POST'])
-def login():
-    if request.method == 'POST':
-        details = request.form
-        #name = details['uname']
-        email = details['mail']
-        password = details['password']
-        cur = mysql.connection.cursor()
-        stmt = "SELECT PASSWORD FROM USERS WHERE EMAIL='"+email+"'"
-        cur.execute(stmt)
-        myresult = cur.fetchall()
-        mysql.connection.commit()
-        print(myresult)
-        print(myresult[0][0])
-        global valid
-        if password == myresult[0][0]:
-            valid = 'correct'
-        else:
-            valid = 'incorrect'
-        print(valid)
-    return render_template("login.html",valid=valid)
 
 d={}
 data = {}
@@ -182,6 +159,84 @@ def signup():
 @app.route("/logged",methods=['GET','POST'])
 def logged():
     return render_template("logged.html",uname=uname)
+
+@app.route("/logged_appointment",methods=['GET','POST'])
+def logged_appointment():
+    if request.method == "POST":
+        global uname
+        cur = mysql.connection.cursor()
+        stmt = "SELECT * FROM USERS WHERE USERNAME='"+uname+"'"
+        cur.execute(stmt)
+        myresult = cur.fetchall()
+        mysql.connection.commit()
+        details = request.form
+        name = details['name']
+        phone = myresult[0][6]
+        mail = myresult[0][5]
+        dob = myresult[0][4]
+        a_date = details['adate']
+        # cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO APPOINTMENT(NAME,PHONE,MAIL,DOB,A_DATE) VALUES ( %s, %s, %s, %s, %s)", (name,phone,mail,dob,a_date))
+        string = details['description']
+        string = string.lower()
+        result = Recommender(string)
+        print(string)
+        print(result)
+        stmt = "SELECT * FROM DOCTOR WHERE DEPT='"+str(result)+"'"
+        cur.execute(stmt)
+        myresult = cur.fetchall()
+        mysql.connection.commit()
+        print(myresult)
+        n=1
+        cur.close()
+        for i in myresult:
+            y={}
+            m = "d"+str(n)
+            y['name'] = i[1]
+            y['dept'] = i[2]
+            y['sh'] = i[4]
+            print(y)
+            d[m] = y
+            n+=1
+            print(d)
+        print(d)
+        global data
+        data = {'name':name,'a_date':a_date}
+    return render_template("logged_appointment.html",d=d,data=data)
+
+
+error=None
+@app.route("/login",methods=['GET','POST'])
+def login():
+    myresult=()
+    password='null'
+    if request.method == 'POST':
+        details = request.form
+        global uname
+        uname = details['uname']
+        email = details['mail']
+        password = details['password']
+        cur = mysql.connection.cursor()
+        try:
+            stmt = "SELECT PASSWORD FROM USERS WHERE EMAIL='"+email+"'"
+            cur.execute(stmt)
+            myresult = cur.fetchall()
+        except (MySQLdb.Error, MySQLdb.Warning) as e:
+            print(e)
+            return None
+        mysql.connection.commit()
+        print(myresult)
+        global error
+        error = None
+        if myresult:
+            if password != myresult[0][0]:
+                error = "Invalid Login Credentials!!!!"
+            else:
+                error = None
+                return redirect(url_for('logged'))
+        else:
+            error = "Invalid Login Credentials!!!!"
+    return render_template("login.html",error=error)
 
 pdata = {}
 pd = {}
