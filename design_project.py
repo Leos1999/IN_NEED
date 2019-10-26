@@ -275,6 +275,10 @@ def profile():
         j+=1
     cur.close()
     return render_template("profile.html",pdata=pdata)
-    
+
+@app.route("/blog")
+def blog():
+    return render_template("blog-single.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
