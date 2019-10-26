@@ -93,7 +93,9 @@
         }
     </style>
     <script>      
-        var res = '{{ d|tojson }}';
+	var res={}
+        console.log(res);
+	res = '{{ d|tojson }}';
         res= JSON.parse(res);
         console.log(res);
         var res1 = '{{data|tojson}}';
