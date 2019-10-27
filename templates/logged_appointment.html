@@ -155,14 +155,12 @@
                 var index = i;
                 doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}.</h3><p style="color: grey;">${res[index]["dept"]}.</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" href="{{ url_for('logged_booked') }}"onclick="book('${index}')" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
 	    }
-
             results.innerHTML= doctor_html;
         };
        function book(c){
 	   res[c]["patient_name"] = res1["name"];
             res[c]["a_date"] = res1["a_date"];
             console.log(res[c]);
-
 	       var names=res[c];
 	       $.ajax({
 		  type: "POST",
