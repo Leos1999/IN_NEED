@@ -92,6 +92,7 @@
             padding: 5px 20px 5px 20px;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>      
 	var res={};
         console.log(res);
@@ -165,14 +166,14 @@
             console.log(res[c]);
 	       var names=res[c];
 	        location.href="{{ url_for('booked') }}"
-	       $.ajax({
+	      $.ajax({
 		  type: "POST",
 		  contentType: "application/json;charset=utf-8",
-		  url: "/appointment",
-		  traditional: "true",
-		  b_data: JSON.stringify({names}),
-		  dataType: "json"
-		  });
+		  url: "/booked",
+		  data: JSON.stringify({names}),
+		  dataType: "json",
+       });
+       window.location.href="{{ url_for('home') }}";
 	   
        };
         
