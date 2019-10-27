@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,6 +22,9 @@
     <link rel="stylesheet" href="/static/css/flaticon.css">
     <link rel="stylesheet" href="/static/css/icomoon.css">
     <link rel="stylesheet" href="/static/css/style1.css">
+    <script>
+        var username = {{uname}};  
+    </script>
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
   	<div class="py-1 bg-black top">
@@ -72,7 +76,7 @@
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-md-6 pt-5 ftco-animate">
           	<div class="mt-5">
-          		<span class="subheading">Welcome to IN-NEED</span>
+          		<span class="subheading">Hi {{uname}}</span>
 	            <h1 class="mb-4">We are here <br>for your Care</h1>
 	            <p class="mb-4">A fast and reliable Website for booking doctors.</p>
 	            <p><a href="{{ url_for('logged_appointment') }}" class="btn btn-primary py-3 px-4">Make an appointment</a></p>
@@ -473,14 +477,12 @@
         </nav>
       </div>
     </header>
-
     <section id="showcase">
       <div class="container">
         <h1>Welcome to the Doctors Appointment Application</h1>
         <p>Make your appointment with our expert panel of doctors.</p>
       </div>
     </section>
-
     <section id="newsletter">
       <div class="container">
         <h1>Make your appointment</h1>
@@ -490,7 +492,6 @@
         </form>
       </div>
     </section>
-
     <section id="boxes">
       <div class="container">
         <div class="box">
@@ -510,9 +511,11 @@
         </div>
       </div>
     </section>
-
     <footer>
       <p>Developed by team IN-NEED</p>
     </footer>
   </body>
 </html> -->
+
+
+
