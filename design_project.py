@@ -193,6 +193,7 @@ def logged_appointment():
             y={}
             m = "d"+str(n)
             y['name'] = i[1]
+            y['host'] = i[3]
             y['dept'] = i[2]
             y['sh'] = i[4]
             print(y)
