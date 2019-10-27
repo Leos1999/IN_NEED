@@ -141,20 +141,23 @@ def appointment():
 d={}
 h_data={}
 
-@app.route("/booked",methods=['GET','POST'])
+@app.route("/booked",methods=['POST'])
 def booked():
-    values = request.get_json()
-    print(values)
-    name = values['name']
-    a_date = values['a_date']
-    d_name = values['d_name']
-    host = values['host']
-    dept = values['dept']
-    cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO BOOKED(NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s)", (name,a_date,d_name,host,dept))
-    mysql.connection.commit()
-    cur.close()
-    return redirect(url_for('home'))
+    if request.method == 'POST':
+        names = request.get_json()
+        print(names)
+        user = 'unknown'
+        name = names['names']['p_name']
+        a_date = names['names']['a_date']
+        d_name = names['names']['name']
+        host = names['names']['host']
+        dept = names['names']['dept']
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO BOOKED(USERNAME,NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s, %s)", (user,name,a_date,d_name,host,dept))
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for('home'))
+    return render_template("booked.html")
 
 @app.route("/signup",methods=['GET','POST'])
 def signup():
@@ -288,18 +291,22 @@ def logged_appointment():
 
 @app.route("/looged_booked",methods=['GET','POST'])
 def logged_booked():
-    values = request.get_json()
-    print(values)
-    name = values['name']
-    a_date = values['a_date']
-    d_name = values['d_name']
-    host = values['host']
-    dept = values['dept']
-    cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO BOOKED(NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s)", (name,a_date,d_name,host,dept))
-    mysql.connection.commit()
-    cur.close()
+    if request.method == 'POST':
+        names = request.get_json()
+        print(names)
+        global uname
+        user = uname
+        name = names['names']['p_name']
+        a_date = names['names']['a_date']
+        d_name = names['names']['name']
+        host = names['names']['host']
+        dept = names['names']['dept']
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO BOOKED(USERNAME,NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s, %s)", (user,name,a_date,d_name,host,dept))
+        mysql.connection.commit()
+        cur.close()
     return redirect(url_for('logged'))
+    #return render_template("booked.html")
 
 pdata = {}
 pd = {}
