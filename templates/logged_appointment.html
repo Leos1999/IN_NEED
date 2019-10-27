@@ -92,6 +92,7 @@
             padding: 5px 20px 5px 20px;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>      
         var res = '{{ d|tojson }}';
         res= JSON.parse(res);
@@ -158,18 +159,18 @@
             results.innerHTML= doctor_html;
         };
        function book(c){
-	   res[c]["patient_name"] = res1["name"];
+	   res[c]["p_name"] = res1["name"];
             res[c]["a_date"] = res1["a_date"];
             console.log(res[c]);
 	       var names=res[c];
 	       $.ajax({
 		  type: "POST",
 		  contentType: "application/json;charset=utf-8",
-		  url: "/appointment",
-		  traditional: "true",
+		  url: "/booked",
 		  data: JSON.stringify({names}),
-		  dataType: "json"
-		  });
+		  dataType: "json",
+       });
+       window.location.href="{{ url_for('logged') }}";
        };
         
     </script>
