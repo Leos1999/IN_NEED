@@ -79,6 +79,7 @@ def services():
 
 d={}
 data = {}
+h_data = {}
 @app.route("/appointment",methods=['GET','POST'])
 def appointment():
     if request.method == "POST":
@@ -101,21 +102,44 @@ def appointment():
         mysql.connection.commit()
         print(myresult)
         n=1
-        cur.close()
+        hos=()
         for i in myresult:
             y={}
             m = "d"+str(n)
             y['name'] = i[1]
             y['dept'] = i[2]
+            y['host'] = i[3]
             y['sh'] = i[4]
+            l=list(hos)
+            l.append(str(i[3]))
+            hos = tuple(l)
             print(y)
             d[m] = y
-            n+=1
             print(d)
-        print(d)
+            n+=1
+        print(hos)
+        stmt = "SELECT * FROM HOSPITAL WHERE NAME IN "+str(hos)
+        cur.execute(stmt)
+        out = cur.fetchall()
+        mysql.connection.commit()
+        print(out)
+        k=1
+        for i in out:
+            z={}
+            j = "h"+str(k)
+            z['name']=i[0]
+            z['address']=i[1]
+            z['phone']=i[2]
+            z['rating']=i[3]
+            h_data[j] = z
+            k+=1
+        print(h_data)
         global data
         data = {'name':name,'a_date':a_date}
-    return render_template("appointment.html",d=d,data=data)
+        cur.close()
+    return render_template("appointment.html",d=d,data=data,h_data=h_data)
+d={}
+h_data={}
 
 @app.route("/booked",methods=['GET','POST'])
 def booked():
@@ -131,6 +155,21 @@ def booked():
     mysql.connection.commit()
     cur.close()
     return redirect(url_for('home'))
+
+@app.route("/looged_booked",methods=['GET','POST'])
+def logged_booked():
+    values = request.get_json()
+    print(values)
+    name = values['name']
+    a_date = values['a_date']
+    d_name = values['d_name']
+    host = values['host']
+    dept = values['dept']
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO BOOKED(NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s)", (name,a_date,d_name,host,dept))
+    mysql.connection.commit()
+    cur.close()
+    return redirect(url_for('logged'))
 
 @app.route("/signup",methods=['GET','POST'])
 def signup():
