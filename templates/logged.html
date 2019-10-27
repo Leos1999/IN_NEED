@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,7 +32,7 @@
         }
     </style>
     <script>
-        var username = {{uname}};  
+        var username = '{{uname|tojson}}';  
     </script>
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -70,11 +69,11 @@
 	        <ul class="navbar-nav nav ml-auto">
 	          <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
 	          <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
-	          <!-- <li class="nav-item"><a href="#department-section" class="nav-link"><span>Department</span></a></li>
-	          <li class="nav-item"><a href="#doctor-section" class="nav-link"><span>Doctors</span></a></li> -->
+	          <li class="nav-item"><a href="#department-section" class="nav-link"><span>Department</span></a></li>
+	          <!-- <li class="nav-item"><a href="#doctor-section" class="nav-link"><span>Doctors</span></a></li> -->
 	          <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
+	          <li class="nav-item"><a href="#" onclick="logs()" class="nav-link"><span>Logs</span></a></li>
 	          <li class="nav-item cta mr-md-2"><a href="{{ url_for('logged_appointment') }}" class="nav-link">Appointment</a></li>
-                <li class="nav-item cta mr-md-2"><a href="" onclick="logs()"class="nav-link">Appointment</a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -117,7 +116,164 @@
         </div>
     	</div>
     </section>
+    
+		<section class="ftco-section ftco-no-pt ftco-no-pb ftco-services-2 bg-light">
+			<div class="container">
+        <div class="row d-flex">
+	        <div class="col-md-7 py-5">
+	        	<div class="py-lg-5">
+		        	<div class="row justify-content-center pb-5">
+			          <div class="col-md-12 heading-section ftco-animate">
+			            <h2 class="mb-3">Our Services</h2>
+			          </div>
+			        </div>
+			        <div class="row">
+			        	<div class="col-md-6 d-flex align-self-stretch ftco-animate">
+			            <div class="media block-6 services d-flex">
+			              <div class="icon justify-content-center align-items-center d-flex"><span class="flaticon-ambulance"></span></div>
+			              <div class="media-body pl-md-4">
+			                <h3 class="heading mb-3">Emergency Services</h3>
+			                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+			              </div>
+			            </div>      
+			          </div>
+			          <div class="col-md-6 d-flex align-self-stretch ftco-animate">
+			            <div class="media block-6 services d-flex">
+			              <div class="icon justify-content-center align-items-center d-flex"><span class="flaticon-doctor"></span></div>
+			              <div class="media-body pl-md-4">
+			                <h3 class="heading mb-3">Qualified Doctors</h3>
+			                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+			              </div>
+			            </div>      
+			          </div>
+			          <div class="col-md-6 d-flex align-self-stretch ftco-animate">
+			            <div class="media block-6 services d-flex">
+			              <div class="icon justify-content-center align-items-center d-flex"><span class="flaticon-stethoscope"></span></div>
+			              <div class="media-body pl-md-4">
+			                <h3 class="heading mb-3">Outdoors Checkup</h3>
+			                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+			              </div>
+			            </div>      
+			          </div>
+			          <div class="col-md-6 d-flex align-self-stretch ftco-animate">
+			            <div class="media block-6 services d-flex">
+			              <div class="icon justify-content-center align-items-center d-flex"><span class="flaticon-24-hours"></span></div>
+			              <div class="media-body pl-md-4">
+			                <h3 class="heading mb-3">24 Hours Service</h3>
+			                <p>Our site will be on 24 hours, serving you all the time.</p>
+			              </div>
+			            </div>      
+			          </div>
+			        </div>
+			      </div>
+          </div>
+          <div class="col-md-5 d-flex" style="background-image: url(/static/img/doc-8.jpg); background-size: 120% 100%;">
+	        </div>
+		    </div>
+			</div>
+    </section>
+    <section class="ftco-section ftco-no-pt ftco-no-pb" id="department-section">
+      <div class="container-fluid px-0">
+        <div class="row no-gutters">
+          <div class="col-md-4 d-flex">
+            <div class="img img-dept align-self-stretch" style="background-image: url(/static/img/dept-1.jpg);"></div>
+          </div>
 
+          <div class="col-md-8">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <div class="department-wrap p-4 ftco-animate">
+                  <div class="text p-2 text-center">
+                    <div class="icon">
+                      <span class="flaticon-stethoscope"></span>
+                    </div>
+                    <h3><a href="#">Neurology</a></h3>
+                    <p>Concerned with the function of nervous system</p>
+                  </div>
+                </div>
+                <div class="department-wrap p-4 ftco-animate">
+                  <div class="text p-2 text-center">
+                    <div class="icon">
+                      <span class="flaticon-stethoscope"></span>
+                    </div>
+                    <h3><a href="#">Psychiatry</a></h3>
+                    <p>Concerned with mental or emotional disorders</p>
+                  </div>
+                </div>
+                <div class="department-wrap p-4 ftco-animate">
+                  <div class="text p-2 text-center">
+                    <div class="icon">
+                      <span class="flaticon-stethoscope"></span>
+                    </div>
+                    <h3><a href="#">Dental</a></h3>
+                    <p>Concerned with teeth,gums,and oral cavity</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="department-wrap p-4 ftco-animate">
+                  <div class="text p-2 text-center">
+                    <div class="icon">
+                      <span class="flaticon-stethoscope"></span>
+                    </div>
+                    <h3><a href="#">Ophthalmology</a></h3>
+                    <p>Concerned with functions and diseases of eye</p>
+                  </div>
+                </div>
+                <div class="department-wrap p-4 ftco-animate">
+                  <div class="text p-2 text-center">
+                    <div class="icon">
+                      <span class="flaticon-stethoscope"></span>
+                    </div>
+                    <h3><a href="#">Cardiology</a></h3>
+                    <p>Concerned with functions and diseases of heart</p>
+                  </div>
+                </div>
+                <div class="department-wrap p-4 ftco-animate">
+                  <div class="text p-2 text-center">
+                    <div class="icon">
+                      <span class="flaticon-stethoscope"></span>
+                    </div>
+                    <h3><a href="#">Pediatrics</a></h3>
+                    <p>Concerned with healthcare of new borns</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="department-wrap p-4 ftco-animate">
+                  <div class="text p-2 text-center">
+                    <div class="icon">
+                      <span class="flaticon-stethoscope"></span>
+                    </div>
+                    <h3><a href="#">Gynecology</a></h3>
+                    <p>Concerned with healthcare of women</p>
+                  </div>
+                </div>
+                <div class="department-wrap p-4 ftco-animate">
+                  <div class="text p-2 text-center">
+                    <div class="icon">
+                      <span class="flaticon-stethoscope"></span>
+                    </div>
+                    <h3><a href="#">Orthopedics</a></h3>
+                    <p>Concerned with disorders or injuries of skeleton</p>
+                  </div>
+                </div>
+                <div class="department-wrap p-4 ftco-animate">
+                  <div class="text p-2 text-center">
+                    <div class="icon">
+                      <span class="flaticon-stethoscope"></span>
+                    </div>
+                    <h3><a href="#">Nephrology</a></h3>
+                    <p>Concerned with functions and diseases of kidneys</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>  
+  
 
       <section class="ftco-section contact-section" id="contact-section">
         <div class="container">
@@ -208,7 +364,6 @@
   
     <script>
         function logs(){
-            console.log("enterd into logs");
             var intro = document.getElementsByClassName("intro");
             intro.innerHTML=`
             
@@ -358,6 +513,4 @@
     </footer>
   </body>
 </html> -->
-
-
 
