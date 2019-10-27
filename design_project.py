@@ -156,8 +156,8 @@ def booked():
         cur.execute("INSERT INTO BOOKED(USERNAME,NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s, %s)", (user,name,a_date,d_name,host,dept))
         mysql.connection.commit()
         cur.close()
-        return redirect(url_for('home'))
-    return render_template("booked.html")
+    return redirect(url_for('home'))
+    #return render_template("booked.html")
 
 @app.route("/signup",methods=['GET','POST'])
 def signup():
