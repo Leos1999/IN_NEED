@@ -9,16 +9,16 @@ from flask import Flask,flash, render_template,request,redirect,url_for
 from flask_mysqldb import MySQL,MySQLdb
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = 'sql12.freemysqlhosting.net'
-app.config['MYSQL_USER'] = 'sql12309268'
-app.config['MYSQL_PASSWORD'] = 'gVV6qlKy6c'
-app.config['MYSQL_DB'] = 'sql12309268'
+app.config['MYSQL_HOST'] = 'remotemysql.com:3306'
+app.config['MYSQL_USER'] = 'rj1xkuSpuK'
+app.config['MYSQL_PASSWORD'] = 'Zo7Na1yOXi'
+app.config['MYSQL_DB'] = 'rj1xkuSpuK'
 
 #git add .
 #git commit -m "db resolved"
 #git push heroku master
 #heroku logs -n 1500
-#\connect sql12309268@sql12.freemysqlhosting.net
+#\connect rj1xkuSpuK@remotemysql.com:3306
 
 mysql = MySQL(app)
 
