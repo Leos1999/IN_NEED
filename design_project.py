@@ -158,7 +158,7 @@ def booked():
         cur.close()
     return redirect(url_for('home'))
     #return render_template("booked.html")
-
+err=None
 @app.route("/signup",methods=['GET','POST'])
 def signup():
     if request.method == "POST":
@@ -175,13 +175,26 @@ def signup():
         district = details['district']
         town = details['town']
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO USERS(USERNAME,FNAME,LNAME,DOB,EMAIL,PHONE,PASSWORD,GENDER,ADDRESS,DISTRICT,TOWN) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (username,firstName, lastName,dob,mail,phone,password,gender,address,district,town))
-        mysql.connection.commit()
+        stmt = "SELECT * FROM USERS WHERE USERNAME='"+str(username)+"' OR EMAIL='"+str(mail)+"'"
+        cur.execute(stmt)
+        myresult = cur.fetchall()
+        global err
+        err = None
+        if myresult:
+            err = "User Already Exists!!!!"
+            cur.close()
+            return redirect(url_for('signup'))
+        else:
+            cur.execute("INSERT INTO USERS(USERNAME,FNAME,LNAME,DOB,EMAIL,PHONE,PASSWORD,GENDER,ADDRESS,DISTRICT,TOWN) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (username,firstName, lastName,dob,mail,phone,password,gender,address,district,town))
+            mysql.connection.commit()
+            cur.close()
+            global uname
+            uname = username
+            return redirect(url_for('logged'))
         cur.close()
-        global uname
-        uname = username
-        return redirect(url_for('logged'))
-    return render_template("signup.html")
+        # global uname
+        # uname = username
+    return render_template("signup.html",err=err)
 
 error=None
 @app.route("/login",methods=['GET','POST'])
