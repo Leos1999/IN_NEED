@@ -9,7 +9,7 @@ from flask import Flask,flash, render_template,request,redirect,url_for
 from flask_mysqldb import MySQL,MySQLdb
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = 'remotemysql.com:3306'
+app.config['MYSQL_HOST'] = 'remotemysql.com'
 app.config['MYSQL_USER'] = 'rj1xkuSpuK'
 app.config['MYSQL_PASSWORD'] = 'Zo7Na1yOXi'
 app.config['MYSQL_DB'] = 'rj1xkuSpuK'
