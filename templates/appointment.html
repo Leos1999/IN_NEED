@@ -103,14 +103,11 @@
 	res1 = JSON.parse(res1);
 	var h = '{{h_data|tojson}}';
 	 h=JSON.parse(h);
+	 console.log(h);
     </script>
     </head>
-    <body>
-        <div class="bg">
-            <div class="bg1"></div>
-            <div class="bg2"></div>
-        </div>
-        <div class="row book">
+    <body id="body-main">
+        <div class="row " id="book-main">
         <div class="col-3" style="max-width: 30%;"></div>
         <div class="book col-6" style="max-width: 60%;">
             <div class="book-body">
@@ -151,6 +148,39 @@
             <div class="col-lg-2"></div>
         </div>
         <script>
+            function search(){
+                
+                var body = document.getElementById('body-main');
+                
+                body.removeChild(document.getElementById('book-main'));
+                
+            var index=0;
+            var hos_html=`<div class="col-3" id="hos-div" style="max-width: 30%;"></div>
+        </div>
+        <hr style="border-top: 1px solid; border-color: grey; border-width: 0px;">
+        <div class="row" id="results" style="background-color: rgb(255, 248, 183);">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8 row hospital">
+                <div class=" mainlogo col-3">
+                    <img style=" height: inherit;" src="/static/img/hospital-logo.jpg">
+                </div>
+                <div class="details col-6">
+                    <h3 style="font-weight: 400;">MDS Hospital</h3>
+                    <p style="color: grey;">asd,asdfg,adfadf,1234</p>
+                    <div class="more-details">
+                        <p>Doctors</p>
+                        <p>Service Hours</p>
+                    </div>
+                </div>
+                <div class="hos-buttons col-3">
+                    <button class="primary-btn text-uppercase" onclick="seeDoctors()">See Doctors</button>
+                    <button class="primary-btn text-uppercase" onclick="">Reviews</button>
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>`;            
+              body.innerHTML=hos_html; 
+            };
 	//var c=0;
         function seeDoctors(){
             var results = document.getElementById('results');
