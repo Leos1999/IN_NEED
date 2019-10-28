@@ -9,7 +9,7 @@
         }
         
         .bg{
-            height: 484px;
+            height: 684px;
             width: inherit;
             z-index: -1;
             position: absolute;
@@ -93,28 +93,29 @@
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>      
-        var res = '{{ d|tojson }}';
+    <script>  
+	var username = '{{uname|tojson}}';
+	var res={};
+        console.log(res);
+	res = '{{ d|tojson }}';
         res= JSON.parse(res);
         console.log(res);
         var res1 = '{{data|tojson}}';
 	res1 = JSON.parse(res1);
-	var username = '{{uname|tojson}}';    
+	var h = '{{h_data|tojson}}';
+	 h=JSON.parse(h);
+	 console.log(h);
     </script>
     </head>
-    <body>
-        <div class="bg">
-            <div class="bg1"></div>
-            <div class="bg2"></div>
-        </div>
-        <div class="row">
+    <body id="body-main">
+        <div class="row " id="book-main">
         <div class="col-3" style="max-width: 30%;"></div>
         <div class="book col-6" style="max-width: 60%;">
             <div class="book-body">
                 <h3  style="color:rgb(0, 0, 0);padding-left: 20px; ">Book an Appointment</h3>
                 <form class="form-wrap" action="#" method="POST">
 					<input type="text" class="form-control" name="name" placeholder="Patient Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'" required>
-					<!-- <input type="tel" pattern="[0-9]{10}" class="form-control" name="phone" placeholder="Phone " onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'" required>
+<!-- 					<input type="tel" pattern="[0-9]{10}" class="form-control" name="phone" placeholder="Phone " onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'" required>
 					<input type="email" class="form-control" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" required>
 					<input id="datepicker1" name="dop" class="dates form-control"  placeholder="Date of Birth" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">    -->
 					<input id="datepicker2" name="adate" class="dates form-control"  placeholder="Appointment Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">  
@@ -124,6 +125,16 @@
             </div>
         </div>
         <div class="col-3" style="max-width: 30%;"></div>
+        </div>
+        <script>
+            function search(){
+                
+                var body = document.getElementById('body-main');
+                
+                body.removeChild(document.getElementById('book-main'));
+                
+            var index=0;
+            var hos_html=`<div class="col-3" id="hos-div" style="max-width: 30%;"></div>
         </div>
         <hr style="border-top: 1px solid; border-color: grey; border-width: 0px;">
         <div class="row" id="results" style="background-color: rgb(255, 248, 183);">
@@ -146,15 +157,17 @@
                 </div>
             </div>
             <div class="col-lg-2"></div>
-        </div>
-        <script>
-	 function seeDoctors(){
+        </div>`;            
+              body.innerHTML=hos_html; 
+            };
+	//var c=0;
+        function seeDoctors(){
             var results = document.getElementById('results');
             var index=0;
             var doctor_html="";
             for (i in res) {
                 var index = i;
-                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}.</h3><p style="color: grey;">${res[index]["dept"]}.</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" href="{{ url_for('logged_booked') }}"onclick="book('${index}')" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
+                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}.</h3><p style="color: grey;">${res[index]["dept"]}.</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" href="{{ url_for('booked') }}" onclick="book('${index}')" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
 	    }
             results.innerHTML= doctor_html;
         };
@@ -163,14 +176,15 @@
             res[c]["a_date"] = res1["a_date"];
             console.log(res[c]);
 	       var names=res[c];
-	       $.ajax({
+	      $.ajax({
 		  type: "POST",
 		  contentType: "application/json;charset=utf-8",
 		  url: "/booked",
 		  data: JSON.stringify({names}),
 		  dataType: "json",
        });
-       window.location.href="{{ url_for('logged') }}";
+       window.location.href="{{ url_for('home') }}";
+	   
        };
         
     </script>
