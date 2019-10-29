@@ -113,7 +113,7 @@
         <div class="book col-6" style="max-width: 60%;">
             <div class="book-body">
                 <h3  style="color:rgb(0, 0, 0);padding-left: 20px; ">Book an Appointment</h3>
-                <form class="form-wrap" action="#" method="POST">
+                <form class="form-wrap" id="work" action="#" method="POST">
 					<input type="text" class="form-control" name="name" placeholder="Patient Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'" required>
 <!-- 					<input type="tel" pattern="[0-9]{10}" class="form-control" name="phone" placeholder="Phone " onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'" required>
 					<input type="email" class="form-control" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" required>
@@ -128,7 +128,7 @@
         </div>
         <script>
             function search(){
-                
+                document.getElementById("work").submit();
                 var body = document.getElementById('body-main');
                 
                 body.removeChild(document.getElementById('book-main'));
