@@ -261,7 +261,7 @@ def login():
 
 @app.route("/logged",methods=['GET','POST'])
 def logged():
-    # global uname
+    global uname
     return render_template("logged.html",uname=uname)
 
 @app.route("/logged_appointment",methods=['GET','POST'])
@@ -332,18 +332,19 @@ def logged_appointment():
         cur.close()
     return render_template("logged_appointment.html",d=d,data=data,h_data=h_data,uname=uname)
 
-@app.route("/looged_booked",methods=['GET','POST'])
+@app.route("/logged_booked",methods=['GET','POST'])
 def logged_booked():
     if request.method == 'POST':
         names = request.get_json()
         print(names)
-        global uname
-        user = uname
+        #global uname
+        #user = uname
         name = names['names']['p_name']
         a_date = names['names']['a_date']
         d_name = names['names']['name']
         host = names['names']['host']
         dept = names['names']['dept']
+        user = names['names']['uname']
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO BOOKED(USERNAME,NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s, %s)", (user,name,a_date,d_name,host,dept))
         mysql.connection.commit()
@@ -372,7 +373,7 @@ def profile():
         pdata['address'] = i[9]
         pdata['district'] = i[10]
         pdata['town'] = i[11]
-    stmt = "SELECT * FROM BOOKED WHERE NAME='"+uname+"'"
+    stmt = "SELECT * FROM BOOKED WHERE USERNAME='"+uname+"'"
     cur.execute(stmt)
     myresult = cur.fetchall()
     mysql.connection.commit()
@@ -387,7 +388,8 @@ def profile():
         stmt = "SELECT ADDRESS FROM HOSPITAL WHERE NAME='"+i[3]+"'"
         cur.execute(stmt)
         myresult = cur.fetchall()
-        pd['h_address'] = myresult[0][0]
+        if myresult:
+            pd['h_address'] = myresult[0][0]
         pdata[k]=pd
         j+=1
     cur.close()
