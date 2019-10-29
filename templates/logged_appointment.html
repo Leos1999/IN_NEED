@@ -120,16 +120,17 @@
 					<input id="datepicker1" name="dop" class="dates form-control"  placeholder="Date of Birth" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">    -->
 					<input id="datepicker2" name="adate" class="dates form-control"  placeholder="Appointment Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">  
 					<textarea name="description" class="" rows="5" placeholder="  Please Describe Your Symtoms" onfocus="this.placeholder = ''" onblur="this.placeholder = '  Please Describe Your Symptoms'"></textarea> 
-					<button onclick="search()" class="primary-btn middle text-uppercase">Search</button>
+					<button  class="primary-btn middle text-uppercase">Submit</button>
 				</form>
+		    <button style="primary-btn middle text-uppercase" onclick="search()">Search</button>
             </div>
         </div>
         <div class="col-3" style="max-width: 30%;"></div>
         </div>
         <script>
-            async function search(){
-		 document.getElementById('work').submit();
-		 await new Promise((resolve, reject) => setTimeout(resolve, 1500));
+             function search(){
+// 		 document.getElementById('work').submit();
+// 		 await new Promise((resolve, reject) => setTimeout(resolve, 1500));
       
                 var body = document.getElementById('body-main');
                 
