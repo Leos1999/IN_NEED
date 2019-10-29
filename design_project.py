@@ -7,7 +7,20 @@ nltk.download('punkt')
 
 from flask import Flask,flash, render_template,request,redirect,url_for
 from flask_mysqldb import MySQL,MySQLdb
+from flask_mail import Mail, Message
+
 app = Flask(__name__)
+
+app.config.update(
+	DEBUG=True,
+	#EMAIL SETTINGS
+	MAIL_SERVER='smtp.gmail.com',
+	MAIL_PORT=465,
+	MAIL_USE_SSL=True,
+	MAIL_USERNAME = '101leosabraham@gmail.com',
+	MAIL_PASSWORD = ''
+	)
+mail = Mail(app)
 
 app.config['MYSQL_HOST'] = 'remotemysql.com'
 app.config['MYSQL_USER'] = 'rj1xkuSpuK'
@@ -155,6 +168,23 @@ def booked():
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO BOOKED(USERNAME,NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s, %s)", (user,name,a_date,d_name,host,dept))
         mysql.connection.commit()
+        cur.execute("SELECT MAIL FROM APPOINTMENT WHERE NAME='"+str(name)+"'")
+        myresult = cur.fetchall()
+        print(myresult)
+        mail = myresult[0][0]
+        print(mail)
+        try:
+            print("HI")
+            msg = Message("Send Mail Tutorial!",
+            sender="101leosabraham@gmail.com",
+            recipients=mail)
+            msg.body = "Yo!\nHave you heard the good word of Python???"
+            mail.send(msg)
+            return 'Mail sent!'
+        except Exception as e:
+            print(e)
+            print('hello')
+            return(str(e)) 
         cur.close()
     return redirect(url_for('home'))
     #return render_template("booked.html")
@@ -231,7 +261,7 @@ def login():
 
 @app.route("/logged",methods=['GET','POST'])
 def logged():
-    #global uname
+    # global uname
     return render_template("logged.html",uname=uname)
 
 @app.route("/logged_appointment",methods=['GET','POST'])
@@ -354,9 +384,14 @@ def profile():
         pd['d_name'] = i[2]
         pd['host'] = i[3]
         pd['dept'] = i[4]
+        stmt = "SELECT ADDRESS FROM HOSPITAL WHERE NAME='"+i[3]+"'"
+        cur.execute(stmt)
+        myresult = cur.fetchall()
+        pd['h_address'] = myresult[0][0]
         pdata[k]=pd
         j+=1
     cur.close()
+    print(pdata)
     return render_template("profile.html",pdata=pdata)
 
 @app.route("/blog")
