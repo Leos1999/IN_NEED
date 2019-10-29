@@ -128,9 +128,9 @@
         </div>
         <script>
             async function search(){
-		 document.getElementById('work').submit;
+		 document.getElementById('work').submit();
 		 await new Promise((resolve, reject) => setTimeout(resolve, 3000));
-                document.getElementById("work").submit();
+      
                 var body = document.getElementById('body-main');
                 
                 body.removeChild(document.getElementById('book-main'));
