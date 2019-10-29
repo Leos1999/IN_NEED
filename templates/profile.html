@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <style>
+        body{
+            overflow: hidden;
+            height: 100%;
+            width:100%;
+        }
+        .photo-name{
+            height: 200px;
+        }
+        .photo{
+            margin: 10px auto 10px auto;
+            border-radius: 200px;
+            width: 125px;
+            height:125px;
+            box-shadow: 0px 0px 10px grey;
+        
+        }
+        .name{
+            position: relative;
+            text-align: center;
+            padding-top: 5px;
+        }
+        .tips{
+            padding: 10px 10px 10px 10px;
+            margin: 10px 20px 20px 20px;
+/*            height:200px;*/
+;        }
+        .photo-tips{
+/*            background-image:radial-gradient(circle,white,black 99%); */
+            overflow: hidden;
+            height:inherit;
+        }
+
+        .bg{
+/*            opacity: 0.9;*/
+            height:inherit;
+            width:inherit;
+            z-index: -1;
+            position: absolute;
+            
+        }
+        .carousel-inner img{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            left: 0;
+            top: 0;
+        }
+        .carousel-inner img::after{
+            width:inherit;
+            height:inherit;
+            content: "";
+            background-color: black;
+            position: absolute;
+            opacity: 0.4;
+            left: 0;
+            top: 0;
+        }
+        #logs-about{
+            padding: 10px 10px ;
+/*            background-color: #f5f2f2;*/
+        }
+    
+        #logs-info{
+            padding: 10px 10px;
+            margin:5px 5px;
+            box-sizing: border-box;
+            box-shadow: -2px 2px 5px #edcb09;
+            border-style: solid;
+            border-color: #a3a112;
+            border-width: 1px;
+            border-radius: 4px;
+        }
+        .track-id{
+            text-align: center;
+            padding-top: 25px;
+            border-style: solid;
+            border-width: 0px 1px 0px 0px;
+            border-color: #a3a112;
+            border-radius: 2px;
+            
+        }
+        .track-id span{
+            font-size:20px;
+            color: dimgray
+        }
+        .logs-details{
+            padding: 5px 0px 2px 8px;
+            width:100%;
+            border-style: solid;
+            border-width: 0px 1px 0px 0px;
+            border-color: #a3a112;
+            border-radius: 2px;
+            text-align-last: left;
+        }
+        #logs{
+            max-height: inherit;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        .item-about{
+            font-size: 17px;
+            color: #080704;
+            margin-right: 10px;
+            
+        }
+        .about-details{
+            box-sizing: border-box;
+            box-shadow: 0px 0px 5px grey;
+            padding-top: 10px;
+            border-radius: 5px;
+        }
+        .about-details div{
+            color: #454441;
+            text-align: left;
+            margin: 2px 0px 5px 2px ;
+        }
+        
+    
+    </style>
+    <body>
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="">PROFILE</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="aboutfn()"href="#">ABOUT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="logs()" href="#">LOGS</a>
+            </li>
+          </ul>
+        </nav>
+        <div  style="height: 1400px;"class="row">
+            <section class="photo-tips col-6">
+                <div class="bg"><img src="/static/img/bg_phototips.jpg"></div>
+                <div class = "photo-name">
+                    <div class="photo">
+                        <img style="height: inherit; width: inherit;"src="/static/img/user.png">
+                    </div>
+                    <div class="name">
+                        <h3> Hi Name</h3>
+                    </div>
+                </div>
+                <div id="demo" class="tips carousel slide" data-ride="carousel">
+
+                  <!-- Indicators -->
+                  <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                  </ul>
+
+                  <!-- The slideshow -->
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="/static/img/exercise.jpg" alt="Chicago">
+                        <div class = "carousel-caption">
+                            <h3>Exercise! for better health</h3>
+                        </div>
+                    </div>
+                      <div class="carousel-item ">
+                      <img src="/static/img/fruits.jpg" alt="Los Angeles">
+                        <div class = "carousel-caption">
+                            <h3>Eat Fruits for more vitamins</h3>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="/static/img/water.jpg" alt="New York">
+                        <div class = "carousel-caption">
+                            <h3>Drink Water Everyday</h3>
+                        </div>
+                    </div>
+                  </div>
+
+                  <!-- Left and right controls -->
+                  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                  </a>
+                  <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                  </a>
+
+                </div>
+            </section>
+            <section style="text-align: center;"class= "col-6"id= "logs-about">
+                <div id="about" >
+                    <h3 style="font-size:20px;color:#0b014a; font-weight: 500;">ABOUT</h3>
+                    <div class="row">
+                        <div class="col-2">
+                    
+                        </div>
+                        <div class="col-8 about-details" style="background-color: white;">
+                                <div style="width:50%; display: inline-block"><p>Username</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Username</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Username</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Username</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Username</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
+                        </div>
+                        <div class="col-2">
+                        
+                        </div>
+                    </div>
+                </div>       
+            </section>
+        </div>
+        <script>
+            var about = document.getElementById('about');
+            var logs_about = document.getElementById('logs-about');
+            function logs(){
+                
+                var content=`
+                        <div class = "row">
+                        <div class= "col-1">
+                        </div>
+                        <div class = "col-10" id="logs-info" style="background-color:white;">
+                            <div class = "logs-sub row">
+                                <div class = "col-2 track-id">
+                                    <p><span>LOG ID</span><br><br>2135567</p>
+                                </div>
+                                <div class="logs-details col-7">
+                                    <p><span class="item-about">Hospital   </span><span class="colon">:</span>qwer</p>
+                                    <p><span class="item-about">Address    </span><span class="colon">:</span>qwrty,wter,1234</p>
+                                    <p><span class="item-about">Doctor     </span><span class="colon">:</span>Dr.asd</p>
+                                    <p><span class="item-about">Department </span><span class="colon">:</span>cardiologist</p>
+                                </div>
+                                <div class="ap_details col-3">
+                                    <p><span class="item-about">Appointment Date</span><span class="colon">:</span>20/12/19</p>
+                                    <p><span class="item-about">Appointment Time</span><span class="colon">:</span>2:00pm</p>
+                                    <p><span class="item-about">Description</span><span class="colon">:</span>heart pain</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class = "col-1">
+                        </div>
+                    </div>    
+                `;
+                logs_about.innerHTML=`<div id="logs" "><h3 style="font-size:20px;color:#0b014a;">LOGS</h3>${content}</div>`;
+            };
+            function aboutfn(){
+                logs_about.innerHTML='';
+                logs_about.appendChild(about);
+            }
+        
+        
+        
+        
+        
+        </script>
+    </body>
+</html>
