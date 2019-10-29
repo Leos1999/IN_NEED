@@ -261,7 +261,7 @@ def login():
 
 @app.route("/logged",methods=['GET','POST'])
 def logged():
-    global uname
+    #global uname
     return render_template("logged.html",uname=uname)
 
 @app.route("/logged_appointment",methods=['GET','POST'])
