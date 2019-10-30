@@ -23,8 +23,8 @@
         .book{
             margin-top: 20px;
         }
-        .form-wrap{
-            margin: 10px 5px 10px 5px;
+        .form-wrap{ 
+             margin: 10px 5px 10px 5px;
             background-color: white;
             padding: 20px 10px 10px 10px;
             border-radius: 3px;
@@ -93,8 +93,7 @@
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>  
-	var username = '{{uname|tojson}}';
+    <script>      
 	var res={};
         console.log(res);
 	res = '{{ d|tojson }}';
@@ -113,31 +112,30 @@
         <div class="book col-6" style="max-width: 60%;">
             <div class="book-body">
                 <h3  style="color:rgb(0, 0, 0);padding-left: 20px; ">Book an Appointment</h3>
-                <form class="form-wrap" id="work" action="#" method="POST">
+                <form class="form-wrap" action="#" method="POST">
 					<input type="text" class="form-control" name="name" placeholder="Patient Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Patient Name'" required>
 <!-- 					<input type="tel" pattern="[0-9]{10}" class="form-control" name="phone" placeholder="Phone " onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'" required>
 					<input type="email" class="form-control" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" required>
 					<input id="datepicker1" name="dop" class="dates form-control"  placeholder="Date of Birth" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">    -->
 					<input id="datepicker2" name="adate" class="dates form-control"  placeholder="Appointment Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">  
 					<textarea name="description" class="" rows="5" placeholder="  Please Describe Your Symtoms" onfocus="this.placeholder = ''" onblur="this.placeholder = '  Please Describe Your Symptoms'"></textarea> 
-					<button  class="primary-btn middle text-uppercase">Submit</button>
+					<button class="primary-btn middle text-uppercase">Search</button>
 				</form>
-		    <button style="primary-btn middle text-uppercase" onclick="search()">Search</button>
+		     <button style="primary-btn middle text-uppercase" onclick="search()">Search</button>
             </div>
         </div>
         <div class="col-3" style="max-width: 30%;"></div>
         </div>
         <script>
-             function search(){
-// 		 document.getElementById('work').submit();
-// 		 await new Promise((resolve, reject) => setTimeout(resolve, 1500));
-      
+            function search(){
+                
                 var body = document.getElementById('body-main');
                 
                 body.removeChild(document.getElementById('book-main'));
                 
-            var index=0;
-            var hos_html=`<div class="col-3" id="hos-div" style="max-width: 30%;"></div>
+            var hos_html="";
+            for (i in h){
+             hos_html +=`<div class="col-3" id="hos-div" style="max-width: 30%;"></div>
         </div>
         <hr style="border-top: 1px solid; border-color: grey; border-width: 0px;">
         <div class="row" id="results" style="background-color: rgb(255, 248, 183);">
@@ -147,30 +145,32 @@
                     <img style=" height: inherit;" src="/static/img/hospital-logo.jpg">
                 </div>
                 <div class="details col-6">
-                    <h3 style="font-weight: 400;">MDS Hospital</h3>
-                    <p style="color: grey;">asd,asdfg,adfadf,1234</p>
+                    <h3 style="font-weight: 400;">${h[i]['name']}</h3>
+                    <p style="color: grey;">${h[i]['address']}</p>
                     <div class="more-details">
-                        <p>Doctors</p>
-                        <p>Service Hours</p>
+                        <p>Phone no: ${h[i]['phone']}</p>
+                        <p>Rating: ${h[i]['rating']}</p>
                     </div>
                 </div>
                 <div class="hos-buttons col-3">
-                    <button class="primary-btn text-uppercase" onclick="seeDoctors()">See Doctors</button>
+                    <button class="primary-btn text-uppercase" onclick="seeDoctors(${i})">See Doctors</button>
                     <button class="primary-btn text-uppercase" onclick="">Reviews</button>
                 </div>
             </div>
             <div class="col-lg-2"></div>
-        </div>`;            
+        </div>`;        }    
               body.innerHTML=hos_html; 
             };
 	//var c=0;
-        function seeDoctors(){
+        function seeDoctors(j){
             var results = document.getElementById('results');
             var index=0;
             var doctor_html="";
             for (i in res) {
-                var index = i;
-                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}.</h3><p style="color: grey;">${res[index]["dept"]}.</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" href="{{ url_for('booked') }}" onclick="book('${index}')" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
+                if(res[i]['host'] == h[j]['name']){
+                    index = i;
+                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}.</h3><p style="color: grey;">${res[index]["dept"]}.</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" href="{{ url_for('booked') }}" onclick="book('${index}')" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`; 
+                }  
 	    }
             results.innerHTML= doctor_html;
         };
@@ -182,11 +182,11 @@
 	      $.ajax({
 		  type: "POST",
 		  contentType: "application/json;charset=utf-8",
-		  url: "/logged_booked",
+		  url: "/booked",
 		  data: JSON.stringify({names}),
 		  dataType: "json",
        });
-       window.location.href="{{ url_for('logged') }}";
+       window.location.href="{{ url_for('home') }}";
 	   
        };
         
