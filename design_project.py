@@ -11,16 +11,16 @@ from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
-app.config.update(
-	DEBUG=True,
-	#EMAIL SETTINGS
-	MAIL_SERVER='smtp.gmail.com',
-	MAIL_PORT=465,
-	MAIL_USE_SSL=True,
-	MAIL_USERNAME = '101leosabraham@gmail.com',
-	MAIL_PASSWORD = ''
-	)
-mail = Mail(app)
+# app.config.update(
+# 	DEBUG=True,
+# 	#EMAIL SETTINGS
+# 	MAIL_SERVER='smtp.gmail.com',
+# 	MAIL_PORT=465,
+# 	MAIL_USE_SSL=True,
+# 	MAIL_USERNAME = '101leosabraham@gmail.com',
+# 	MAIL_PASSWORD = ''
+# 	)
+# mail = Mail(app)
 
 app.config['MYSQL_HOST'] = 'remotemysql.com'
 app.config['MYSQL_USER'] = 'rj1xkuSpuK'
