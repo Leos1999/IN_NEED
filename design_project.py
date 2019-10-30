@@ -7,20 +7,20 @@ nltk.download('punkt')
 
 from flask import Flask,flash, render_template,request,redirect,url_for
 from flask_mysqldb import MySQL,MySQLdb
-# from flask_mail import Mail, Message
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
-# app.config.update(
-# 	DEBUG=True,
-# 	#EMAIL SETTINGS
-# 	MAIL_SERVER='smtp.gmail.com',
-# 	MAIL_PORT=465,
-# 	MAIL_USE_SSL=True,
-# 	MAIL_USERNAME = '101leosabraham@gmail.com',
-# 	MAIL_PASSWORD = ''
-# 	)
-# mail = Mail(app)
+app.config.update(
+	DEBUG=True,
+	#EMAIL SETTINGS
+	MAIL_SERVER='smtp.gmail.com',
+	MAIL_PORT=465,
+	MAIL_USE_SSL=True,
+	MAIL_USERNAME = '101leosabraham@gmail.com',
+	MAIL_PASSWORD = ''
+	)
+mail = Mail(app)
 
 app.config['MYSQL_HOST'] = 'remotemysql.com'
 app.config['MYSQL_USER'] = 'rj1xkuSpuK'
@@ -258,11 +258,11 @@ def login():
         else:
             error = "Invalid Login Credentials!!!!"
     return render_template("login.html",error=error)
-
+message = None
 @app.route("/logged",methods=['GET','POST'])
 def logged():
     global uname
-    return render_template("logged.html",uname=uname)
+    return render_template("logged.html",uname=uname,message=message)
 
 @app.route("/logged_appointment",methods=['GET','POST'])
 def logged_appointment():
@@ -351,6 +351,8 @@ def logged_booked():
         cur.execute("INSERT INTO BOOKED(USERNAME,NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s, %s)", (user,name,a_date,d_name,host,dept))
         mysql.connection.commit()
         cur.close()
+    global message
+    message="Your Booking has been registered!!!"
     return redirect(url_for('logged'))
     #return render_template("booked.html")
 
@@ -396,7 +398,8 @@ def profile():
         j+=1
     cur.close()
     print(pdata)
-    return render_template("profile.html",pdata=pdata)
+    uname=pdata['uname']
+    return render_template("profile.html",pdata=pdata,uname=uname)
 
 @app.route("/blog")
 def blog():
