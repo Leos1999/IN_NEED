@@ -9,8 +9,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script>
             var pdata = '{{pdata|tojson}}';
+            var p_data  = '{{p_data|tojson}}';
             pdata= JSON.parse(pdata);
-            console.log(pdata)
+            p_data= JSON.parse(p_data);
+            console.log(pdata);
+             console.log(p_data);
         </script>
     </head>
     <style>
@@ -231,8 +234,9 @@
             var logs_about = document.getElementById('logs-about');
             logs_about.innerHTML=about;
             function logs(){
-                
-                var content=`
+                var content="";
+                for (i in p_data){
+                 content+=`
                         <div class = "row">
                         <div class= "col-1">
                         </div>
@@ -242,21 +246,21 @@
                                     <p><span>LOG ID</span><br><br>2135567</p>
                                 </div>
                                 <div class="logs-details col-7">
-                                    <p><span class="item-about">Hospital   </span><span class="colon">:</span>qwer</p>
-                                    <p><span class="item-about">Address    </span><span class="colon">:</span>qwrty,wter,1234</p>
-                                    <p><span class="item-about">Doctor     </span><span class="colon">:</span>Dr.asd</p>
-                                    <p><span class="item-about">Department </span><span class="colon">:</span>cardiologist</p>
+                                    <p><span class="item-about">Hospital   </span><span class="colon">:</span>${p_data['name']}</p>
+                                    <p><span class="item-about">Address    </span><span class="colon">:</span>${p_data['h_address']}</p>
+                                    <p><span class="item-about">Doctor     </span><span class="colon">:</span>${p_data['d_name']}</p>
+                                    <p><span class="item-about">Department </span><span class="colon">:</span>${p_data['dept']}</p>
                                 </div>
                                 <div class="ap_details col-3">
-                                    <p><span class="item-about">Appointment Date</span><span class="colon">:</span>20/12/19</p>
-                                    <p><span class="item-about">Appointment Time</span><span class="colon">:</span>2:00pm</p>
+                                    <p><span class="item-about">Appointment Date</span><span class="colon">:</span>${p_data['a_date']}</p>
+                                    <p><span class="item-about">Appointment Time</span><span class="colon">:</span>11:00pm</p>
                                 </div>
                             </div>
                         </div>
                         <div class = "col-1">
                         </div>
                     </div>    
-                `;
+                `;}
                 logs_about.innerHTML=`<div id="logs" "><h3 style="font-size:20px;color:#0b014a;">LOGS</h3>${content}</div>`;
             };
             function aboutfn(){
