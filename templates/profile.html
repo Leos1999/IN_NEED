@@ -4,6 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -116,8 +117,9 @@
         }
         .item-about{
             font-size: 17px;
-            color: #080704;
+            color: #850316;
             margin-right: 10px;
+            font-family: 'Poppins', sans-serif;
             
         }
         .about-details{
@@ -125,6 +127,10 @@
             box-shadow: 0px 0px 5px grey;
             padding-top: 10px;
             border-radius: 5px;
+        }
+        .about-details *{
+            color:#850316;
+            font-family: 'Poppins', sans-serif;
         }
         .about-details div{
             color: #454441;
@@ -134,7 +140,7 @@
         
     
     </style>
-    <body style="background-color: rgb(188, 253, 123);" >
+    <body style="background-color: #f0f0f0;">
         <nav class="navbar navbar-expand-sm bg-light navbar-light">
           <ul class="navbar-nav">
             <li class="nav-item active">
@@ -203,17 +209,19 @@
 
                 </div>
             </section>
-            <section style="text-align: center;"class= "col-6"id= "logs-about">
+            <section class= "col-6"id= "logs-about">
                      
             </section>
         </div>
+<!--        border-color: #db0457;border-style: solid;border-width: 0px 0px 2px 0px ;border-radius:100px;-->
         <script>
             var about = `<div id="about" >
-                    <h3 style="font-size:20px;color:#0b014a; font-weight: 500;">ABOUT</h3>
+                    <h3 style=" padding:20px;font-size:28px;color:#fc0352; font-weight: 500; font-family: 'Poppins', sans-serif; ">About</h3>
                     <div class="row">
                         <div class="col-2">
                     
                         </div>
+                        
                         <div class="col-8 about-details" style="background-color: white;">
                                  <div style="width:50%; display: inline-block"><p>Username</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['uname']}</p></div><br>
                                  <div style="width:50%; display: inline-block"><p>Name</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['fname']+' '+pdata['lname']}</p></div><br>
@@ -242,17 +250,17 @@
                         <div class = "col-10" id="logs-info" style="background-color:white;">
                             <div class = "logs-sub row">
                                 <div class = "col-2 track-id">
-                                    <p><span style="color:#eb1202;">LOG ID</span><br><br>2135567</p>
+                                    <p style="font-family: 'Poppins', sans-serif; color:#fc0352;"><span style="color:#eb1202;">LOG ID</span><br><br>2135567</p>
                                 </div>
                                 <div class="logs-details col-7">
-                                    <p><span class="item-about">Hospital   </span><span class="colon">:</span>${p_data[i]['name']}</p>
-                                    <p><span class="item-about">Address    </span><span class="colon">:</span>${p_data[i]['h_address']}</p>
-                                    <p><span class="item-about">Doctor     </span><span class="colon">:</span>${p_data[i]['d_name']}</p>
-                                    <p><span class="item-about">Department </span><span class="colon">:</span>${p_data[i]['dept']}</p>
+                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Hospital   </span><span class="colon">:</span>${p_data[i]['name']}</p>
+                                    <p style="color:#c4021e; font-family: 'Poppins', sans-serif;"><span class="item-about">Address    </span><span class="colon">:</span>${p_data[i]['h_address']}</p>
+                                    <p style=" color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Doctor     </span><span class="colon">:</span>${p_data[i]['d_name']}</p>
+                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Department </span><span class="colon">:</span>${p_data[i]['dept']}</p>
                                 </div>
                                 <div class="ap_details col-3">
-                                    <p><span class="item-about">Appointment Date</span><span class="colon">:</span>${p_data[i]['a_date']}</p>
-                                    <p><span class="item-about">Appointment Time</span><span class="colon">:</span>11:00pm</p>
+                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Appointment Date</span><span class="colon">:</span>${p_data[i]['a_date']}</p>
+                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Appointment Time</span><span class="colon">:</span>11:00pm</p>
                                 </div>
                             </div>
                         </div>
@@ -260,7 +268,7 @@
                         </div>
                     </div>    
                 `;}
-                logs_about.innerHTML=`<div id="logs" "><h3 style="font-size:20px;color:#0b014a;">LOGS</h3>${content}</div>`;
+                logs_about.innerHTML=`<div id="logs" "><h3 style=" padding:20px;font-size:28px;color:#fc0352; font-weight: 500; font-family: 'Poppins', sans-serif;font-weight:500; ">Logs</h3>${content}</div>`;
             };
             function aboutfn(){
                 logs_about.innerHTML='';
