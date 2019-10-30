@@ -393,7 +393,9 @@ def profile():
         pd['d_name'] = i[3]
         pd['host'] = i[4]
         pd['dept'] = i[5]
-        stmt = "SELECT ADDRESS FROM HOSPITAL WHERE NAME='"+i[4]+"'"
+        print(i[4])
+        stmt = 'SELECT ADDRESS FROM HOSPITAL WHERE NAME="'+str(i[4])+'"'
+        print(stmt)
         cur.execute(stmt)
         myresult = cur.fetchall()
         if myresult:
