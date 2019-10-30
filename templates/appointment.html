@@ -133,8 +133,9 @@
                 
                 body.removeChild(document.getElementById('book-main'));
                 
-            var index=0;
-            var hos_html=`<div class="col-3" id="hos-div" style="max-width: 30%;"></div>
+            var hos_html="";
+            for (i in h){
+             hos_html +=`<div class="col-3" id="hos-div" style="max-width: 30%;"></div>
         </div>
         <hr style="border-top: 1px solid; border-color: grey; border-width: 0px;">
         <div class="row" id="results" style="background-color: rgb(255, 248, 183);">
@@ -144,30 +145,32 @@
                     <img style=" height: inherit;" src="/static/img/hospital-logo.jpg">
                 </div>
                 <div class="details col-6">
-                    <h3 style="font-weight: 400;">MDS Hospital</h3>
-                    <p style="color: grey;">asd,asdfg,adfadf,1234</p>
+                    <h3 style="font-weight: 400;">${h[i]['name']}</h3>
+                    <p style="color: grey;">${h[i]['address']}</p>
                     <div class="more-details">
-                        <p>Doctors</p>
-                        <p>Service Hours</p>
+                        <p>Phone no: ${h[i]['phone']}</p>
+                        <p>Rating: ${h[i]['rating']}</p>
                     </div>
                 </div>
                 <div class="hos-buttons col-3">
-                    <button class="primary-btn text-uppercase" onclick="seeDoctors()">See Doctors</button>
+                    <button class="primary-btn text-uppercase" onclick="seeDoctors(${i})">See Doctors</button>
                     <button class="primary-btn text-uppercase" onclick="">Reviews</button>
                 </div>
             </div>
             <div class="col-lg-2"></div>
-        </div>`;            
+        </div>`;        }    
               body.innerHTML=hos_html; 
             };
 	//var c=0;
-        function seeDoctors(){
+        function seeDoctors(j){
             var results = document.getElementById('results');
             var index=0;
             var doctor_html="";
             for (i in res) {
-                var index = i;
-                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}.</h3><p style="color: grey;">${res[index]["dept"]}.</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" href="{{ url_for('booked') }}" onclick="book('${index}')" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`;   
+                if(res[i]['host'] == h[j]['name']){
+                    index = i;
+                doctor_html+=`<div class="col-lg-2"></div><div class="col-lg-8 row hospital" id="hospital"><div class=" mainlogo col-3"><img style=" height: inherit;" src="/static/img/doctor-logo.jpg"></div><div class="details col-6"><h3 style="font-weight: 400;">${res[index]["name"]}.</h3><p style="color: grey;">${res[index]["dept"]}.</p><div class="more-details"><p>Service Hours: ${res[index]["sh"]}</p></div></div><div class="hos-buttons col-3"><button class="primary-btn text-uppercase" href="{{ url_for('booked') }}" onclick="book('${index}')" id="book">Book</button><button class="primary-btn text-uppercase" onclick="">Reviews</button></div></div><div class="col-lg-2"></div>`; 
+                }  
 	    }
             results.innerHTML= doctor_html;
         };
