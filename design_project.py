@@ -388,12 +388,12 @@ def profile():
     for i in myresult:
         pd={}
         k = "pd"+str(j)
-        pd['name'] = i[0]
-        pd['a_date'] = i[1]
-        pd['d_name'] = i[2]
-        pd['host'] = i[3]
-        pd['dept'] = i[4]
-        stmt = "SELECT ADDRESS FROM HOSPITAL WHERE NAME='"+i[3]+"'"
+        pd['name'] = i[1]
+        pd['a_date'] = i[2]
+        pd['d_name'] = i[3]
+        pd['host'] = i[4]
+        pd['dept'] = i[5]
+        stmt = "SELECT ADDRESS FROM HOSPITAL WHERE NAME='"+i[4]+"'"
         cur.execute(stmt)
         myresult = cur.fetchall()
         if myresult:
