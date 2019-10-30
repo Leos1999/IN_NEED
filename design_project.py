@@ -194,7 +194,7 @@ def booked():
             msg = Message("Send Mail Tutorial!",
             sender="csmace2017@gmail.com",
             recipients=[smail])
-            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l))]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment."
+            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l)-1)]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment."
             mail.send(msg)
             return 'Mail sent!'
         except Exception as e:
@@ -392,7 +392,7 @@ def logged_booked():
             msg = Message("Send Mail Tutorial!",
             sender="csmace2017@gmail.com",
             recipients=[smail])
-            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l))]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment."
+            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l)-1)]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment."
             mail.send(msg)
             return 'Mail sent!'
         except Exception as e:
@@ -441,7 +441,7 @@ def profile():
         pd['host'] = i[4]
         pd['dept'] = i[5]
         pd['logid'] = 89465700+i[6]
-        pd['time'] = l[random.randint(0,len(l))]
+        pd['time'] = l[random.randint(0,len(l)-1)]
         print(i[4])
         stmt = 'SELECT ADDRESS FROM HOSPITAL WHERE NAME="'+str(i[4])+'"'
         print(stmt)
