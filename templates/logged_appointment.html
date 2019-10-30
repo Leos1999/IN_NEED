@@ -104,6 +104,7 @@
 	var h = '{{h_data|tojson}}';
 	 h=JSON.parse(h);
 	 console.log(h);
+	 var username = '{{uname|tojson}}';
     </script>
     </head>
     <body id="body-main">
@@ -177,7 +178,7 @@
        function book(c){
 	   res[c]["p_name"] = res1["name"];
             res[c]["a_date"] = res1["a_date"];
-	       res[c]["username"] = '{{uname}}';
+	       res[c]["uname"] = '{{uname}}';
             console.log(res[c]);
 	       var names=res[c];
 	      $.ajax({
