@@ -357,6 +357,7 @@ def logged_booked():
     #return render_template("booked.html")
 
 pdata = {}
+p_data={}
 pd = {}
 @app.route("/profile",methods=['GET','POST'])
 def profile():
@@ -394,12 +395,12 @@ def profile():
         myresult = cur.fetchall()
         if myresult:
             pd['h_address'] = myresult[0][0]
-        pdata[k]=pd
+        p_data[k]=pd
         j+=1
     cur.close()
     print(pdata)
     uname=pdata['uname']
-    return render_template("profile.html",pdata=pdata,uname=uname)
+    return render_template("profile.html",pdata=pdata,p_data=p_data,uname=uname)
 
 @app.route("/blog")
 def blog():
