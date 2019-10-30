@@ -7,20 +7,20 @@ nltk.download('punkt')
 
 from flask import Flask,flash, render_template,request,redirect,url_for
 from flask_mysqldb import MySQL,MySQLdb
-#from flask_mail import Mail, Message
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
-#app.config.update(
-# 	DEBUG=True,
-# 	#EMAIL SETTINGS
-# 	MAIL_SERVER='smtp.gmail.com',
-# 	MAIL_PORT=465,
-# 	MAIL_USE_SSL=True,
-# 	MAIL_USERNAME = '101leosabraham@gmail.com',
-# 	MAIL_PASSWORD = ''
-# 	)
-# mail = Mail(app)
+app.config.update(
+	DEBUG=True,
+	#EMAIL SETTINGS
+	MAIL_SERVER='smtp.gmail.com',
+	MAIL_PORT=465,
+	MAIL_USE_SSL=True,
+	MAIL_USERNAME = '101leosabraham@gmail.com',
+	MAIL_PASSWORD = ''
+	)
+mail = Mail(app)
 
 app.config['MYSQL_HOST'] = 'remotemysql.com'
 app.config['MYSQL_USER'] = 'rj1xkuSpuK'
@@ -261,7 +261,7 @@ def login():
 
 @app.route("/logged",methods=['GET','POST'])
 def logged():
-    #global uname
+    global uname
     return render_template("logged.html",uname=uname)
 
 @app.route("/logged_appointment",methods=['GET','POST'])
@@ -302,6 +302,8 @@ def logged_appointment():
             y['host'] = i[3]
             y['dept'] = i[2]
             y['sh'] = i[4]
+            y['rating']=i[5]
+            y['q']=i[6]
             l=list(hos)
             l.append(str(i[3]))
             hos = tuple(l)
@@ -322,7 +324,7 @@ def logged_appointment():
             z['name']=i[0]
             z['address']=i[1]
             z['phone']=i[2]
-            z['rating']=i[3]
+            z['rating']=i[3]      
             h_data[j] = z
             k+=1
         print(h_data)
