@@ -77,7 +77,10 @@ def Recommender(sentance):
             if i in v:
                 Recom_list[k] += 1
     print('Please consult :', Specialists[Recom_list.index(max(Recom_list))])
-    return Specialists[Recom_list.index(max(Recom_list))]
+    if max(Recom_list)>1:
+        return Specialists[Recom_list.index(max(Recom_list))]
+    else:
+        return Specialists[18]
 
 @app.route("/")
 def home():
