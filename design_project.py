@@ -191,10 +191,10 @@ def booked():
         addr = myresult[0][0]
         try:
             print("HI")
-            msg = Message("Send Mail Tutorial!",
+            msg = Message("Appointment Confirmation",
             sender="csmace2017@gmail.com",
             recipients=[smail])
-            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l)-1)]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment."
+            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l)-1)]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment.\n\n Thanks & Regards,\n Team IN-NEED"
             mail.send(msg)
             return 'Mail sent!'
         except Exception as e:
@@ -389,10 +389,10 @@ def logged_booked():
         addr = myresult[0][0]
         try:
             print("HI")
-            msg = Message("Send Mail Tutorial!",
+            msg = Message("Appointment Confirmation",
             sender="csmace2017@gmail.com",
             recipients=[smail])
-            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l)-1)]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment."
+            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l)-1)]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment.\n\n Thanks & Regards,\n Team IN-NEED"
             mail.send(msg)
             return 'Mail sent!'
         except Exception as e:
