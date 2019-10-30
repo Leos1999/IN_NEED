@@ -7,7 +7,7 @@ nltk.download('punkt')
 
 from flask import Flask,flash, render_template,request,redirect,url_for
 from flask_mysqldb import MySQL,MySQLdb
-from flask_mail import Mail, Message
+# from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
