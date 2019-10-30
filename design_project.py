@@ -46,9 +46,9 @@ def Recommender(sentance):
         if w not in stop_words:
             filtered_sentence.append(w)
 
-    Specialists = ['Addiction psychiatrist', 'Immunologist', 'Cardiologist', 'Dermatologist', 'Developmental pediatrician',
+   Specialists = ['Addiction psychiatrist', 'Immunologist', 'Cardiologist', 'Dermatologist', 'Developmental pediatrician',
                    'Gastroenterologist', 'Gynecologist', 'Hematologist', 'Nephrologist', 'Neurologist',
-                   'Oncologist', 'Ophthalmologist', 'Orthopedic surgeon', 'ENT', 'Pediatrician', 'Psychiatrist', 'Urologist','Dentist']
+                   'Oncologist', 'Ophthalmologist', 'Orthopedic surgeon', 'ENT', 'Pediatrician', 'Psychiatrist', 'Urologist','Dentist','Physician']
 
     Collection = {0: ['addiction', 'alcohol', 'drugs', 'concentration'],
                   1: ['allergy', 'immunity', 'pollen', 'sneezing', 'itchy', 'rash', 'swollen'],
@@ -59,7 +59,7 @@ def Recommender(sentance):
                   6: ['pregnancy', 'birth', 'fertility', 'women', 'menstruation', 'disorders'],
                   7: ['blood', 'clotting', 'blood-clotting', 'anemia', 'weakness', 'weight', 'infection', 'bruising', 'excessive', 'bleeding', 'energy'],
                   8: ['pressure', 'high', 'blood', 'diabetes', 'kidney', 'urine', 'back', 'smelly', 'appetite', 'skin', 'yellow', 'weight'],
-                  9: ['headache', 'chronic', 'pain', 'dizziness', 'movement', 'problems', 'weakness', 'loss', 'consciousness', 'memory', 'confusion', 'sleep'],
+                  9: ['headache', 'chronic', 'pain', 'dizziness', 'movement', 'problems', 'weakness', 'loss', 'consciousness', 'memory', 'confusion', 'sleep','sleeping','confusing'],
                   10: ['cancer'],
                   11: ['eye', 'vision', 'eyes', 'see', 'pain'],
                   12: ['shoulder', 'pain', 'bone', 'twisted', 'angles', 'joints', 'numb', 'hands', 'swollen', 'bend', 'wrist', 'neck', 'broken', 'painful', 'stiff', 'muscles','leg','back','hand','joint'],
@@ -67,9 +67,10 @@ def Recommender(sentance):
                   14: ['child', 'kid', 'baby', 'new', 'born', 'fever', 'cough'],
                   15: ['mental', 'depression', 'concentration', 'addiction', 'temper', 'anxiety', 'disorder', 'illogical', 'thoughts', 'memory'],
                   16: ['urine', 'infection', 'urinating', 'pelvic', 'pain', 'fertility', 'men', 'erectile'],
-                  17: ['teeth']
+                  17: ['teeth','toothache'],
+                  18: ['head','headache','leg','injury','hand','pain','throat','eye','fever','body','vomiting','gas','problems']
                   }
-    Recom_list = [0] * 18
+    Recom_list = [0] * 19
     for i in filtered_sentence:
         for k, v in Collection.items():
             if i in v:
