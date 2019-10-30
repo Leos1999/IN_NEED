@@ -140,7 +140,7 @@
         
     
     </style>
-    <body style="background-color: #f0f0f0;">
+    <body style="background-image: url(/static/img/bg_phototips.jpg)">
         <nav class="navbar navbar-expand-sm bg-light navbar-light">
           <ul class="navbar-nav">
             <li class="nav-item active">
@@ -216,13 +216,13 @@
 <!--        border-color: #db0457;border-style: solid;border-width: 0px 0px 2px 0px ;border-radius:100px;-->
         <script>
             var about = `<div id="about" >
-                    <h3 style=" padding:20px;font-size:28px;color:#fc0352; font-weight: 500; font-family: 'Poppins', sans-serif; ">About</h3>
+                    <h3 style=" padding:20px;font-size:28px;color:white; font-weight: 550; font-family: 'Poppins', sans-serif; ">About</h3>
                     <div class="row">
                         <div class="col-2">
                     
                         </div>
                         
-                        <div class="col-8 about-details" style="background-color: white;">
+                        <div class="col-8 about-details" style="background-color: #fcf7f5;">
                                  <div style="width:50%; display: inline-block"><p>Username</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['uname']}</p></div><br>
                                  <div style="width:50%; display: inline-block"><p>Name</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['fname']+' '+pdata['lname']}</p></div><br>
                                  <div style="width:50%; display: inline-block"><p>Date Of Birth</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['dob']}</p></div><br>
@@ -247,7 +247,7 @@
                         <div class = "row">
                         <div class= "col-1">
                         </div>
-                        <div class = "col-10" id="logs-info" style="background-color:white;">
+                        <div class = "col-10" id="logs-info" style="background-color:#fcf7f5;">
                             <div class = "logs-sub row">
                                 <div class = "col-2 track-id">
                                     <p style="font-family: 'Poppins', sans-serif; color:#fc0352;"><span style="color:#eb1202;">LOG ID</span><br><br>2135567</p>
@@ -268,7 +268,7 @@
                         </div>
                     </div>    
                 `;}
-                logs_about.innerHTML=`<div id="logs" "><h3 style=" padding:20px;font-size:28px;color:#fc0352; font-weight: 500; font-family: 'Poppins', sans-serif;font-weight:500; ">Logs</h3>${content}</div>`;
+                logs_about.innerHTML=`<div id="logs" "><h3 style=" padding:20px;font-size:28px;color:white; font-weight: 550; font-family: 'Poppins', sans-serif;font-weight:500; ">Logs</h3>${content}</div>`;
             };
             function aboutfn(){
                 logs_about.innerHTML='';
