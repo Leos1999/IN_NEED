@@ -202,34 +202,34 @@
                 </div>
             </section>
             <section style="text-align: center;"class= "col-6"id= "logs-about">
-                <div id="about" >
+                     
+            </section>
+        </div>
+        <script>
+            var about = `<div id="about" >
                     <h3 style="font-size:20px;color:#0b014a; font-weight: 500;">ABOUT</h3>
                     <div class="row">
                         <div class="col-2">
                     
                         </div>
                         <div class="col-8 about-details" style="background-color: white;">
-                                <div style="width:50%; display: inline-block"><p>Username</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
-                                 <div style="width:50%; display: inline-block"><p>Name</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
-                                 <div style="width:50%; display: inline-block"><p>Date Of Birth</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
-                                 <div style="width:50%; display: inline-block"><p>Email</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
-                                 <div style="width:50%; display: inline-block"><p>Phone</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
-                                 <div style="width:50%; display: inline-block"><p>Gender</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
-                                 <div style="width:50%; display: inline-block"><p>Address</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
-                                 <div style="width:50%; display: inline-block"><p>District</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
-                                 <div style="width:50%; display: inline-block"><p>Town</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>qwert</p></div><br>
-                                 
+                                 <div style="width:50%; display: inline-block"><p>Username</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['uname']}</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Name</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['fname']+' '+pdata['lname']}</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Date Of Birth</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['dob']}</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Email</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['mail']}</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Phone</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['phone']}</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Gender</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['gender']}</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Address</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['address']}</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>District</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['district']}</p></div><br>
+                                 <div style="width:50%; display: inline-block"><p>Town</p></div>:<div style="width:25%; display:inline-block; padding-left: 10px; "><p>${pdata['town']}</p></div><br>
                         </div>
                         <div class="col-2">
                         
                         </div>
                     </div>
-                </div>       
-            </section>
-        </div>
-        <script>
-            var about = document.getElementById('about');
+                </div>  `;
             var logs_about = document.getElementById('logs-about');
+            logs_about.innerHTML=about;
             function logs(){
                 
                 var content=`
@@ -261,7 +261,7 @@
             };
             function aboutfn(){
                 logs_about.innerHTML='';
-                logs_about.appendChild(about);
+                logs_about.innerHTML=about;
             }
         
         
