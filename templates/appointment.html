@@ -149,12 +149,12 @@
                     <p style="color: grey;">${h[i]['address']}</p>
                     <div class="more-details">
                         <p>Phone no: ${h[i]['phone']}</p>
-                        <p>Rating: ${h[i]['rating']}</p>
+                        
                     </div>
                 </div>
                 <div class="hos-buttons col-3">
                     <button class="primary-btn text-uppercase" onclick="seeDoctors('${i}')">See Doctors</button>
-                    <button class="primary-btn text-uppercase" onclick="">Reviews</button>
+                    <p>Rating: ${h[i]['rating']}/5</p>
                 </div>
             </div>
             <div class="col-lg-2"></div>
