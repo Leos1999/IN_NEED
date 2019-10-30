@@ -386,6 +386,7 @@ def profile():
     mysql.connection.commit()
     j=1
     for i in myresult:
+        pd={}
         k = "pd"+str(j)
         pd['name'] = i[0]
         pd['a_date'] = i[1]
