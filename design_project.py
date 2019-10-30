@@ -123,6 +123,8 @@ def appointment():
             y['dept'] = i[2]
             y['host'] = i[3]
             y['sh'] = i[4]
+            y['rating']=i[5]
+            y['q'] = i[6]
             l=list(hos)
             l.append(str(i[3]))
             hos = tuple(l)
