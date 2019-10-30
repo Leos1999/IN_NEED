@@ -1,26 +1,27 @@
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+import random
 
 nltk.download("stopwords")
 nltk.download('punkt')
 
 from flask import Flask,flash, render_template,request,redirect,url_for
 from flask_mysqldb import MySQL,MySQLdb
-# from flask_mail import Mail, Message
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
-# app.config.update(
-# 	DEBUG=True,
-# 	#EMAIL SETTINGS
-# 	MAIL_SERVER='smtp.gmail.com',
-# 	MAIL_PORT=465,
-# 	MAIL_USE_SSL=True,
-# 	MAIL_USERNAME = '101leosabraham@gmail.com',
-# 	MAIL_PASSWORD = ''
-# 	)
-# mail = Mail(app)
+app.config.update(
+	DEBUG=True,
+	#EMAIL SETTINGS
+	MAIL_SERVER='smtp.gmail.com',
+	MAIL_PORT=465,
+	MAIL_USE_SSL=True,
+	MAIL_USERNAME = 'csmace2017@gmail.com',
+	MAIL_PASSWORD = 'macollege'
+	)
+mail = Mail(app)
 
 app.config['MYSQL_HOST'] = 'remotemysql.com'
 app.config['MYSQL_USER'] = 'rj1xkuSpuK'
@@ -46,7 +47,7 @@ def Recommender(sentance):
         if w not in stop_words:
             filtered_sentence.append(w)
 
-   Specialists = ['Addiction psychiatrist', 'Immunologist', 'Cardiologist', 'Dermatologist', 'Developmental pediatrician',
+    Specialists = ['Addiction psychiatrist', 'Immunologist', 'Cardiologist', 'Dermatologist', 'Developmental pediatrician',
                    'Gastroenterologist', 'Gynecologist', 'Hematologist', 'Nephrologist', 'Neurologist',
                    'Oncologist', 'Ophthalmologist', 'Orthopedic surgeon', 'ENT', 'Pediatrician', 'Psychiatrist', 'Urologist','Dentist','Physician']
 
@@ -168,25 +169,36 @@ def booked():
         d_name = names['names']['name']
         host = names['names']['host']
         dept = names['names']['dept']
+        l = ['9:45am','10:00am','10:30am','10:45am','10:15am','11:00am','11:15am','11:30am','11:45am','12:00pm','12:15am','12:30am','1:30am','1:45am','2:00am','2:15am','2:30am','2:45am','3:00am',]
+        alphabets = ['a','b','q','w','e','r','t','y','u','i','o','p','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m','1','2','3','4','5','6','7','8','9','0']
+        code_list = random.sample(alphabets,10)
+        code=''
+        for i in code_list:
+            code = code[:]+str(i)
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO BOOKED(USERNAME,NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s, %s)", (user,name,a_date,d_name,host,dept))
         mysql.connection.commit()
-        cur.execute("SELECT MAIL FROM APPOINTMENT WHERE NAME='"+str(name)+"'")
+        cur.execute("SELECT MAIL FROM APPOINTMENT WHERE NAME='"+str(name)+"' AND A_DATE='"+a_date+"'")
         myresult = cur.fetchall()
         print(myresult)
-        mail = myresult[0][0]
-        print(mail)
+        smail = myresult[0][0]
+        print(smail)
+        cur.execute("SELECT LOGID FROM BOOKED WHERE NAME='"+str(name)+"' AND D_NAME='"+str(d_name)+"'")
+        myresult = cur.fetchall()
+        logid = 89465700 + int(myresult[0][0])
+        cur.execute("SELECT ADDRESS FROM HOSPITAL WHERE NAME='"+str(host)+"'")
+        myresult = cur.fetchall()
+        addr = myresult[0][0]
         try:
             print("HI")
             msg = Message("Send Mail Tutorial!",
-            sender="101leosabraham@gmail.com",
-            recipients=mail)
-            msg.body = "Yo!\nHave you heard the good word of Python???"
+            sender="csmace2017@gmail.com",
+            recipients=[smail])
+            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l))]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment."
             mail.send(msg)
             return 'Mail sent!'
         except Exception as e:
             print(e)
-            print('hello')
             return(str(e)) 
         cur.close()
     return redirect(url_for('home'))
@@ -358,6 +370,34 @@ def logged_booked():
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO BOOKED(USERNAME,NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s, %s)", (user,name,a_date,d_name,host,dept))
         mysql.connection.commit()
+        cur.execute("SELECT MAIL FROM APPOINTMENT WHERE NAME='"+str(name)+"' AND A_DATE='"+a_date+"'")
+        myresult = cur.fetchall()
+        print(myresult)
+        smail = myresult[0][0]
+        print(smail)
+        cur.execute("SELECT LOGID FROM BOOKED WHERE NAME='"+str(name)+"' AND D_NAME='"+str(d_name)+"'")
+        myresult = cur.fetchall()
+        logid = 89465700 + int(myresult[0][0])
+        l = ['9:45am','10:00am','10:30am','10:45am','10:15am','11:00am','11:15am','11:30am','11:45am','12:00pm','12:15am','12:30am','1:30am','1:45am','2:00am','2:15am','2:30am','2:45am','3:00am',]
+        alphabets = ['a','b','q','w','e','r','t','y','u','i','o','p','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m','1','2','3','4','5','6','7','8','9','0']
+        code_list = random.sample(alphabets,10)
+        code=''
+        for i in code_list:
+            code = code[:]+str(i)
+        cur.execute("SELECT ADDRESS FROM HOSPITAL WHERE NAME='"+str(host)+"'")
+        myresult = cur.fetchall()
+        addr = myresult[0][0]
+        try:
+            print("HI")
+            msg = Message("Send Mail Tutorial!",
+            sender="csmace2017@gmail.com",
+            recipients=[smail])
+            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l))]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment."
+            mail.send(msg)
+            return 'Mail sent!'
+        except Exception as e:
+            print(e)
+            return(str(e)) 
         cur.close()
     global message
     message="Your Booking has been registered!!!"
@@ -390,6 +430,7 @@ def profile():
     cur.execute(stmt)
     myresult = cur.fetchall()
     mysql.connection.commit()
+    l = ['9:45am','10:00am','10:30am','10:45am','10:15am','11:00am','11:15am','11:30am','11:45am','12:00pm','12:15am','12:30am','1:30am','1:45am','2:00am','2:15am','2:30am','2:45am','3:00am',]
     j=1
     for i in myresult:
         pd={}
@@ -399,6 +440,8 @@ def profile():
         pd['d_name'] = i[3]
         pd['host'] = i[4]
         pd['dept'] = i[5]
+        pd['logid'] = 89465700+i[6]
+        pd['time'] = l[random.randint(0,len(l))]
         print(i[4])
         stmt = 'SELECT ADDRESS FROM HOSPITAL WHERE NAME="'+str(i[4])+'"'
         print(stmt)
