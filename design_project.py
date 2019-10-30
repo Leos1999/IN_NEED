@@ -264,6 +264,11 @@ message = None
 @app.route("/logged",methods=['GET','POST'])
 def logged():
     global uname
+    if request.method == 'POST':
+        name = request.get_json()
+        print(name)
+        uname = name['Username']
+        print(uname)
     return render_template("logged.html",uname=uname,message=message)
 
 @app.route("/logged_appointment",methods=['GET','POST'])
