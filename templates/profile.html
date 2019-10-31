@@ -111,9 +111,9 @@
             text-align-last: left;
         }
         #logs{
-            max-height: 800px;
+            height: 700px;
             overflow-y: scroll;
-            
+            overflow-x: hidden;
         }
         .item-about{
             font-size: 17px;
@@ -250,17 +250,18 @@
                         <div class = "col-10" id="logs-info" style="background-color:#fcf7f5;">
                             <div class = "logs-sub row">
                                 <div class = "col-2 track-id">
-                                    <p style="font-family: 'Poppins', sans-serif; color:#fc0352;"><span style="color:#eb1202;">LOG ID</span><br><br>2135567</p>
+                                    <p style="font-family: 'Poppins', sans-serif; color:#fc0352;"><span style="color:#eb1202;">LOG ID</span><br><br>${p_data[i]['logid']}</p>
                                 </div>
                                 <div class="logs-details col-7">
-                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Hospital   </span><span class="colon">:</span>${p_data[i]['name']}</p>
-                                    <p style="color:#c4021e; font-family: 'Poppins', sans-serif;"><span class="item-about">Address    </span><span class="colon">:</span>${p_data[i]['h_address']}</p>
-                                    <p style=" color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Doctor     </span><span class="colon">:</span>${p_data[i]['d_name']}</p>
-                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Department </span><span class="colon">:</span>${p_data[i]['dept']}</p>
+                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Patient   </span><span class="colon">: </span>${p_data[i]['name']}</p>
+                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Hospital   </span><span class="colon">: </span>${p_data[i]['host']}</p>
+                                    <p style="color:#c4021e; font-family: 'Poppins', sans-serif;"><span class="item-about">Address    </span><span class="colon">: </span>${p_data[i]['h_address']}</p>
+                                    <p style=" color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Doctor     </span><span class="colon">: </span>${p_data[i]['d_name']}</p>
+                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Department </span><span class="colon">: </span>${p_data[i]['dept']}</p>
                                 </div>
                                 <div class="ap_details col-3">
                                     <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Appointment Date</span><span class="colon">:</span>${p_data[i]['a_date']}</p>
-                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Appointment Time</span><span class="colon">:</span>11:00pm</p>
+                                    <p style="color:#c4021e;font-family: 'Poppins', sans-serif;"><span class="item-about">Appointment Time</span><span class="colon">:</span>${p_data[i]['time']}</p>
                                 </div>
                             </div>
                         </div>
