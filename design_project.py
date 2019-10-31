@@ -77,7 +77,7 @@ def Recommender(sentance):
             if i in v:
                 Recom_list[k] += 1
     print('Please consult :', Specialists[Recom_list.index(max(Recom_list))])
-    if Recom_list.index(max(Recom_list)) !=0:
+    if Recom_list.index(max(Recom_list)):
         return Specialists[Recom_list.index(max(Recom_list))]
     else:
         return Specialists[18]
@@ -133,6 +133,14 @@ def appointment():
             l=list(hos)
             l.append(str(i[3]))
             hos = tuple(l)
+            stmt = 'SELECT SLOT FROM BOOKED_DETAILS WHERE HOST="'+str(i[3])+'" AND DOCTOR="'+str(i[1])+'"'
+            cur.execute(stmt)
+            rslt = cur.fetchall()
+            if rslt:
+                y['slot'] = int(rslt[0][0])
+                print(y['slot'])
+            else:
+                y['slot'] = 10
             print(y)
             d[m] = y
             print(d)
@@ -182,28 +190,56 @@ def booked():
         cur.execute("INSERT INTO BOOKED(USERNAME,NAME,A_DATE,D_NAME,HOST,DEPT) VALUES ( %s, %s, %s, %s, %s, %s)", (user,name,a_date,d_name,host,dept))
         mysql.connection.commit()
         cur.execute("SELECT MAIL FROM APPOINTMENT WHERE NAME='"+str(name)+"' AND A_DATE='"+a_date+"'")
+        mysql.connection.commit()
         myresult = cur.fetchall()
         print(myresult)
         smail = myresult[0][0]
         print(smail)
         cur.execute("SELECT LOGID FROM BOOKED WHERE NAME='"+str(name)+"' AND D_NAME='"+str(d_name)+"'")
+        mysql.connection.commit()
         myresult = cur.fetchall()
+        print(myresult)
         logid = 89465700 + int(myresult[0][0])
-        cur.execute("SELECT ADDRESS FROM HOSPITAL WHERE NAME='"+str(host)+"'")
+        cur.execute('SELECT ADDRESS FROM HOSPITAL WHERE NAME="'+str(host)+'"')
+        mysql.connection.commit()
         myresult = cur.fetchall()
         addr = myresult[0][0]
+        time=l[random.randint(0,len(l)-1)]
+        cur.execute('SELECT * FROM BOOKED_DETAILS WHERE A_DATE="'+a_date+'" AND HOST="'+host+'" AND DOCTOR="'+d_name+'"')
+        mysql.connection.commit()
+        myresult = cur.fetchall()
+        if myresult:
+            print("NOT Here")
+            print(myresult[0][3])
+            print(myresult[0])
+            num = myresult[0][3]-1
+            cur.execute("UPDATE BOOKED_DETAILS SET SLOT="+num+" WHERE A_DATE='"+a_date+"' AND HOST='"+host+"' AND DOCTOR='"+d_name+"'")
+            mysql.connection.commit()
+            print("also here")
+        else:
+            cur.execute("INSERT INTO BOOKED_DETAILS(HOST,DOCTOR,A_DATE) VALUES ( %s, %s, %s)", (host,d_name,a_date))
+            mysql.connection.commit()
+            print('Here')
+        cur.execute("SELECT PHONE,DOB FROM APPOINTMENT WHERE NAME='"+str(name)+"' AND A_DATE='"+a_date+"'")
+        mysql.connection.commit()
+        myresult = cur.fetchall()
+        print(myresult)
+        number = myresult[0][0]
+        dob = str(myresult[0][1])
+        cur.execute("INSERT INTO `"+host+"`(DOCTOR,DEPT,PATIENT,PHONE,MAIL,SECRET,DOB,TIME,A_DATE) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s)", (d_name,dept,name,number,smail,code,dob,time,str(a_date)))
+        mysql.connection.commit()
+        cur.close()
         try:
             print("HI")
             msg = Message("Appointment Confirmation",
             sender="csmace2017@gmail.com",
             recipients=[smail])
-            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l)-1)]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment.\n\n Thanks & Regards,\n Team IN-NEED"
+            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+time+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment.\n\n Thanks & Regards,\n Team IN-NEED"
             mail.send(msg)
             return 'Mail sent!'
         except Exception as e:
             print(e)
-            return(str(e)) 
-        cur.close()
+            return(str(e))
     return redirect(url_for('home'))
     #return render_template("booked.html")
 err=None
@@ -330,6 +366,14 @@ def logged_appointment():
             l=list(hos)
             l.append(str(i[3]))
             hos = tuple(l)
+            stmt = 'SELECT SLOT FROM BOOKED_DETAILS WHERE HOST="'+str(i[3])+'" AND DOCTOR="'+str(i[1])+'"'
+            cur.execute(stmt)
+            rslt = cur.fetchall()
+            if rslt:
+                y['slot'] = int(rslt[0][0])
+                print(y['slot'])
+            else:
+                y['slot'] = 10
             print(y)
             d[m] = y
             n+=1
@@ -380,6 +424,7 @@ def logged_booked():
         print(smail)
         cur.execute("SELECT LOGID FROM BOOKED WHERE NAME='"+str(name)+"' AND D_NAME='"+str(d_name)+"'")
         myresult = cur.fetchall()
+        print(myresult)
         logid = 89465700 + int(myresult[0][0])
         l = ['9:45am','10:00am','10:30am','10:45am','10:15am','11:00am','11:15am','11:30am','11:45am','12:00pm','12:15am','12:30am','1:30am','1:45am','2:00am','2:15am','2:30am','2:45am','3:00am',]
         alphabets = ['a','b','q','w','e','r','t','y','u','i','o','p','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m','1','2','3','4','5','6','7','8','9','0']
@@ -390,18 +435,33 @@ def logged_booked():
         cur.execute("SELECT ADDRESS FROM HOSPITAL WHERE NAME='"+str(host)+"'")
         myresult = cur.fetchall()
         addr = myresult[0][0]
+        print(addr)
+        time=l[random.randint(0,len(l)-1)] 
+        cur.execute('SELECT * FROM BOOKED_DETAILS WHERE A_DATE="'+a_date+'" AND HOST="'+host+'" AND DOCTOR="'+d_name+'"')
+        myresult = cur.fetchall()
+        print(myresult)
+        if myresult:
+            cur.execute("UPDATE BOOKED_DETAILS SET SLOT="+int(myresult[0][3])-1+" WHERE A_DATE='"+a_date+"' AND HOST='"+host+"' AND DOCTOR='"+d_name+"'")
+        else:
+            cur.execute("INSERT INTO BOOKED_DETAILS(HOST,DOCTOR,A_DATE) VALUES ( %s, %s, %s)", (host,d_name,a_date))
+        cur.execute("SELECT PHONE,DOB FROM APPOINTMENT WHERE NAME='"+str(name)+"' AND A_DATE='"+a_date+"'")
+        myresult = cur.fetchall()
+        print(myresult)
+        number = myresult[0][0]
+        dob = myresult[0][1]
+        cur.execute("INSERT INTO `"+host+"`(DOCTOR,DEPT,PATIENT,PHONE,MAIL,SECRET,DOB,TIME,A_DATE) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s)", (d_name,dept,name,number,smail,code,dob,time,a_date))
+        cur.close()
         try:
             print("HI")
             msg = Message("Appointment Confirmation",
             sender="csmace2017@gmail.com",
             recipients=[smail])
-            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+l[random.randint(0,len(l)-1)]+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment.\n\n Thanks & Regards,\n Team IN-NEED"
+            msg.body = "Hi "+name+",\n\tThis is about the information on your doctor appointment, below attached are the details, \nLog Id: "+str(logid)+"\nHospital: "+host+"\nAddress: "+addr+"\nAppointment Date: "+a_date+"\nAppointment Time:"+time+"\nDoctor: "+d_name+"\n\nSECURITY CODE: "+code+"\nDont share your security code to anyone!!!, This is used as verification for your appointment.\n\n Thanks & Regards,\n Team IN-NEED"
             mail.send(msg)
             return 'Mail sent!'
         except Exception as e:
             print(e)
-            return(str(e)) 
-        cur.close()
+            return(str(e))
     global message
     message="Your Booking has been registered!!!"
     return redirect(url_for('logged'))
@@ -458,6 +518,41 @@ def profile():
     print(pdata)
     uname=pdata['uname']
     return render_template("profile.html",pdata=pdata,p_data=p_data,uname=uname)
+
+host_data={}
+@app.route("/hospital")
+def hospital():
+    # names = request.get_json()
+    # host = names['names']['host']
+    host = 'LF'
+    cur = mysql.connection.cursor()
+    stmt = "SELECT DISTINCT DEPT FROM `"+host+"`"
+    cur.execute(stmt)
+    myresult = cur.fetchall()
+    mysql.connection.commit()
+    print(myresult)
+    for i in myresult:
+        stmt = "SELECT * FROM `"+host+"` WHERE DEPT='"+i[0]+"'"
+        print(i[0])
+        cur.execute(stmt)
+        rslt = cur.fetchall()
+        doc={}
+        for k in rslt:
+            v={}
+            v['p_name'] = k[3]
+            v['phone'] = k[4]
+            v['mail'] = k[5]
+            v['code'] = k[6]
+            v['dob'] = k[7]
+            v['time'] = k[8]
+            v['a_date'] = k[9]
+            doc[k[1]] = v
+            print(v)
+        host_data[i[0]] = doc
+        print(doc)
+    cur.close()
+    print(host_data)
+    return render_template("hospital.html",host_data=host_data)
 
 @app.route("/blog")
 def blog():
