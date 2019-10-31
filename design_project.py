@@ -69,7 +69,7 @@ def Recommender(sentance):
                   15: ['mental', 'depression', 'concentration', 'addiction', 'temper', 'anxiety', 'disorder', 'illogical', 'thoughts', 'memory'],
                   16: ['urine', 'infection', 'urinating', 'pelvic', 'pain', 'fertility', 'men', 'erectile'],
                   17: ['teeth','toothache'],
-                  18: ['head','headache','leg','injury','hand','pain','throat','eye','fever','body','vomiting','gas','problems']
+                  18: ['head','headache','leg','injury','hand','pain','throat','fever','body','vomiting','gas','problems']
                   }
     Recom_list = [0] * 19
     for i in filtered_sentence:
@@ -77,7 +77,7 @@ def Recommender(sentance):
             if i in v:
                 Recom_list[k] += 1
     print('Please consult :', Specialists[Recom_list.index(max(Recom_list))])
-    if max(Recom_list)>1:
+    if Recom_list.index(max(Recom_list)) !=0:
         return Specialists[Recom_list.index(max(Recom_list))]
     else:
         return Specialists[18]
