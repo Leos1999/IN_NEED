@@ -3,6 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 body {font-family: Arial, Helvetica, sans-serif;position: relative; overflow-x: hidden;}
 form {border: 3px solid #f1f1f1;}
@@ -93,6 +94,7 @@ span.psw {
 <div class="col-lg-3"></div>
 </div>
 <script>
+  var c=0;
     function check(){
       var out = res.localeCompare("incorrect");
       console.log(out.toString);
@@ -100,8 +102,24 @@ span.psw {
           console.log(res);
           window.alert("Wrong Username and Password!");
     }
+    console.log(c)
+    d = c.toString()
+    $.ajax({
+		  type: "POST",
+		  contentType: "application/json;charset=utf-8",
+		  url: "/login",
+		  data: JSON.stringify({d}),
+		  dataType: "json",
+      });
+    var h_name = document.getElementById("user").value();
+      $.ajax({
+		  type: "POST",
+		  contentType: "application/json;charset=utf-8",
+		  url: "/hospital",
+		  data: JSON.stringify({h_name}),
+		  dataType: "json",
+      });
     };
-    var c=0;
     function toggle(){
         var sign = document.getElementById("psw-a");
         var user = document.getElementById("user");
@@ -116,6 +134,7 @@ span.psw {
             user.setAttribute('placeholder','Username');
         }
      };
+    
 </script>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
