@@ -183,21 +183,23 @@
             
         }
        function book(c){
-	    
-	   window.alert('Your booking is completed succesfully, check your email for verification');
-	   res[c]["p_name"] = res1["name"];
+	       res[c]["p_name"] = res1["name"];
             res[c]["a_date"] = res1["a_date"];
-	       res[c]["uname"] = '{{uname}}';
             console.log(res[c]);
-	       var names=res[c];
+	      if(res[c]['slot']<1){
+              window.alert("Booking not available, book another doctor");
+          }
+           else{
+                var names=res[c];
 	      $.ajax({
 		  type: "POST",
 		  contentType: "application/json;charset=utf-8",
-		  url: "/logged_booked",
+		  url: "/booked",
 		  data: JSON.stringify({names}),
 		  dataType: "json",
        });
-       window.location.href="{{ url_for('logged') }}";
+       window.location.href="{{ url_for('home') }}";
+           }
 	   
        };
         
